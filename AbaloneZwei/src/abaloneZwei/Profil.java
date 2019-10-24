@@ -1,6 +1,7 @@
 package abaloneZwei;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public class Profil implements Serializable {
 
@@ -11,7 +12,8 @@ public class Profil implements Serializable {
 	private String email;
 	private String passwort;
 	private int bewertung;
-	private Verlauf verlauf;
+	private Verlauf verlaufTeilgenommen;
+	private Verlauf verlaufVeranstaltet;
 	
 	public Profil (String vorname, String nachname, String nutzername, String email, String passwort) {
 		
@@ -21,7 +23,8 @@ public class Profil implements Serializable {
 		setEmail(email);
 		setPasswort(passwort);
 		bewertung = 0;
-		verlauf = new Verlauf();
+		verlaufTeilgenommen = new Verlauf();		
+		verlaufVeranstaltet = new Verlauf();
 		
 	}
 	
@@ -106,6 +109,22 @@ public class Profil implements Serializable {
 	public String toString() {
 		
 		return "[ "+ vorname + " " +  nachname  + " ]";
+		
+	}
+	
+	public void berechneBewertung () {
+		
+		int durchschnitt = 0;
+		
+		ArrayList<Event> events = verlaufVeranstaltet.getEvents();
+		
+		for (Event current : events) {
+			
+			durchschnitt += current.getBewertung();
+			
+		}
+		
+		this.bewertung = durchschnitt / events.size();
 		
 	}
 

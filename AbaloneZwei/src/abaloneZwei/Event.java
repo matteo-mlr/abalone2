@@ -6,10 +6,11 @@ public class Event {
 	private String titel;
 	private String beschreibung;
 	private String kategorie;
-	private String zeitraum;  //nur temporär String
+	private String zeitraum;  //nur temporï¿½r String
 	private Profil[] teilnehmer;
 	private int teilnehmerAnzahl;
 	private Rezension[] rezensionen;
+	private int bewertung;
 	//private Standort standort;
 	//private bilder img[];
 	//private kategorieIcon img;
@@ -95,8 +96,29 @@ public class Event {
 		return 	"Titel: " + titel + "\n" +
 				"Kategorie: " + kategorie + "\n" +
 				"Uhrzeit: " + zeitraum + "\n" +
-				"Für: " + teilnehmerAnzahl + " Personen";
+				"Fï¿½r: " + teilnehmerAnzahl + " Personen";
 	}
 	
+	public void berechneBewertung () {
+		
+		int durchschnitt = 0;
+		
+		for (Rezension current : rezensionen) {
+			
+			durchschnitt += current.getBewertung();
+			
+		}
+		
+		durchschnitt /= rezensionen.length;
+		
+		this.bewertung = durchschnitt;
+		
+	}
 	
+	public int getBewertung () {
+		
+		return bewertung;
+		
+	}
+ 	
 }
