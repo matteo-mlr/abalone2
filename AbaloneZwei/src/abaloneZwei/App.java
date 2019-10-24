@@ -23,7 +23,8 @@ public class App {
 		
 		try {
 		
-			if (vorname == null || nachname == null || nutzername == null || email == null || passwort == null) {
+			if (vorname == null || nachname == null || nutzername == null || email == null || passwort == null ||
+				vorname.length() < 1 || nachname.length() < 1 || nutzername.length() < 1 || email.length() < 1 || passwort.length() < 1) {
 			
 				throw new AppException("Falsche Eingabe.");
 			
