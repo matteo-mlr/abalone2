@@ -33,6 +33,10 @@ public class Profil implements Serializable {
 		events.add(new Event(this, titel, kategorie, zeitraum, teilnehmerAnzahl));
 	}
 	
+	public ArrayList<Event> getEvents() {
+		return events;
+	}
+	
 	private void setVorname (String vorname) {
 		
 		if (vorname == null) {

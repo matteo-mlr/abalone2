@@ -96,7 +96,7 @@ public class Event {
 		return 	"Titel: " + titel + "\n" +
 				"Kategorie: " + kategorie + "\n" +
 				"Uhrzeit: " + zeitraum + "\n" +
-				"F�r: " + teilnehmerAnzahl + " Personen";
+				"Für: " + teilnehmerAnzahl + " Personen";
 	}
 	
 	public void berechneBewertung () {
@@ -121,4 +121,5 @@ public class Event {
 		
 	}
  	
+
 }

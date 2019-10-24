@@ -1,5 +1,7 @@
 package abaloneZwei;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Scanner;
 
 import fehlermanagement.AppException;
@@ -54,11 +56,24 @@ public class ConsoleUI {
 			if(eingabe.equals("1"))
 				eventAnlegen();
 			if(eingabe.equals("2"))
-				anmelden();
+				eventsAnzeigen();
 
 		}
 	}
 		
+	
+	private static void eventsAnzeigen() {
+		
+		ArrayList<Event> events = app.getAktivesProfil().getEvents();
+		
+		for (int i = 0; i < events.size(); i++) {
+			System.out.println((i+1) + ". " + events.get(i).getTitel());
+			
+		}
+		
+		
+	}
+	
 	private static void eventAnlegen() {
 		
 		System.out.println("========================");

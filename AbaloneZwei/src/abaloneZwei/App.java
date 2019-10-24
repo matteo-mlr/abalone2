@@ -9,6 +9,11 @@ public class App {
 	private ArrayList<Profil> profile = new ArrayList<Profil>();
 	private Profil akitvesProfil;
 	
+	public App() {
+		
+		profile.add(new Profil("admin", "admin", "admin", "admin@mail.de", "admin"));
+	}
+	
 	public void profilAnlegen (String vorname, String nachname, String nutzername, String email, String passwort) {
 		
 		String regexVornameNachname = "[a-zA-Z]+";
