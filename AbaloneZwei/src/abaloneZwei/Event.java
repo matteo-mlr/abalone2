@@ -6,7 +6,7 @@ public class Event {
 	private String titel;
 	private String beschreibung;
 	private String kategorie;
-	private int zeitraum;
+	private String zeitraum;  //nur temporär String
 	private Profil[] teilnehmer;
 	private int teilnehmerAnzahl;
 	private Rezension[] rezensionen;
@@ -14,7 +14,7 @@ public class Event {
 	//private bilder img[];
 	//private kategorieIcon img;
 	
-	public Event(Profil ersteller, String titel,String kategorie, int zeitraum,int teilnehmerAnzahl) {
+	public Event(Profil ersteller, String titel,String kategorie, String zeitraum,int teilnehmerAnzahl) {
 		
 		setErsteller(ersteller);
 		setTitel(titel);
@@ -58,11 +58,11 @@ public class Event {
 		this.kategorie = kategorie;
 	}
 
-	public int getZeitraum() {
+	public String getZeitraum() {
 		return zeitraum;
 	}
 
-	private void setZeitraum(int zeitraum) {
+	private void setZeitraum(String zeitraum) {
 		this.zeitraum = zeitraum;
 	}
 
@@ -90,7 +90,13 @@ public class Event {
 		this.rezensionen = rezensionen;
 	}
 	
-	
+	@Override
+	public String toString() {
+		return 	"Titel: " + titel + "\n" +
+				"Kategorie: " + kategorie + "\n" +
+				"Uhrzeit: " + zeitraum + "\n" +
+				"Für: " + teilnehmerAnzahl + " Personen";
+	}
 	
 	
 }

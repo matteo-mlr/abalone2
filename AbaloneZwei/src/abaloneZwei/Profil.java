@@ -83,4 +83,9 @@ public class Profil {
 	
 	}
 
+	@Override
+	public String toString() {
+		return "[ "+ vorname + " " +  nachname  + " ]";
+	}
+	
 }
