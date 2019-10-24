@@ -1,6 +1,8 @@
 package abaloneZwei;
 
-public class Profil {
+import java.io.Serializable;
+
+public class Profil implements Serializable {
 	
 	private String vorname;
 	private String nachname;
@@ -72,15 +74,27 @@ public class Profil {
 
 	private void setPasswort (String passwort) {
 	
-	if (passwort == null) {
+		if (passwort == null) {
+			
+			// Fehlermanagement
+			return;
+			
+		}
 		
-		// Fehlermanagement
-		return;
+		this.passwort = passwort;
+	
+	}
+	
+	public String getPasswort () {
+		
+		return passwort;
 		
 	}
 	
-	this.passwort = passwort;
-	
+	public String getNutzername () {
+		
+		return nutzername;
+		
 	}
 
 	@Override
