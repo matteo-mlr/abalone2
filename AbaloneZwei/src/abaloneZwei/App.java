@@ -101,9 +101,9 @@ public class App {
 					
 					int counter = 0;
 					
-					for (Profil profil : profile) {
+					for (int i = 0; i < profile.size(); i++) {
 						
-						if (!profil.getNutzername().equals(nutzername)) {
+						if (!profile.get(i).getNutzername().equals(nutzername)) {
 							
 							counter++;
 							
