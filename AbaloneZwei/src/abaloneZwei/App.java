@@ -3,6 +3,8 @@ package abaloneZwei;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import fehlermanagement.AppException;
+
 public class App {
 	
 	private static ArrayList<Profil> profile;
@@ -19,10 +21,19 @@ public class App {
 	
 	private static void profilAnlegen (String vorname, String nachname, String nutzername, String email, String passwort) {
 		
-		if (vorname == null && nachname == null && nutzername == null && email == null && passwort == null) {
+		try {
 		
-			throw new RuntimeException("Fehler");
+			if (vorname == null || nachname == null || nutzername == null || email == null || passwort == null) {
+			
+				throw new AppException("Falsche Eingabe.");
+			
+			}
 		
+		} catch (AppException ae) {
+			
+			System.out.println("Fehler");
+			return;
+			
 		}
 		
 		profile.add(new Profil(vorname, nachname, nutzername, email, passwort));
