@@ -3,7 +3,7 @@ package abaloneZwei;
 import java.io.Serializable;
 
 public class Profil implements Serializable {
-	
+
 	private String vorname;
 	private String nachname;
 	private String nutzername;
@@ -83,6 +83,10 @@ public class Profil implements Serializable {
 	
 	this.passwort = passwort;
 	
+	}
+
+	public String getNutzername(){
+		return nutzername;
 	}
 
 }
