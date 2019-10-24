@@ -74,19 +74,30 @@ public class Profil implements Serializable {
 
 	private void setPasswort (String passwort) {
 	
-	if (passwort == null) {
+		if (passwort == null) {
+			
+			// Fehlermanagement
+			return;
+			
+		}
 		
-		// Fehlermanagement
-		return;
-		
+		this.passwort = passwort;
+	
 	}
 	
-	this.passwort = passwort;
-	
+	public String getPasswort () {
+		
+		return passwort;
+		
 	}
 
 	public String getNutzername(){
 		return nutzername;
+	}
+
+	@Override
+	public String toString() {
+		return "[ "+ vorname + " " +  nachname  + " ]";
 	}
 
 }
