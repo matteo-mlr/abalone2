@@ -2,7 +2,6 @@ package abaloneZwei;
 
 import java.util.ArrayList;
 import java.util.Scanner;
-
 import fehlermanagement.AppException;
 
 public class App {
@@ -16,47 +15,120 @@ public class App {
 		Scanner sc = new Scanner(System.in);
 		
 		System.out.println("========================");
-		System.out.println("     Profil anlegen");
+		System.out.println("       ABALONE  2");
 		System.out.println("========================");
 		
-		System.out.println("Vorname");
-		System.out.print("> ");
-		String vorname = sc.nextLine();
+		System.out.println("  1 | Anmelden");
+		System.out.println("  2 | Registrieren");
 		
-		System.out.println("Nachname");
-		System.out.print("> ");
-		String nachname = sc.nextLine();
+		System.out.println("========================");
 		
-		System.out.println("Nutzername");
-		System.out.print("> ");
-		String nutzername = sc.nextLine();
+		boolean falscheEingabe = true;
+		String choice = "";
 		
-		System.out.println("E-Mail Adresse");
-		System.out.print("> ");
-		String email = sc.nextLine();
+		while (falscheEingabe) {
 		
-		boolean nichtKorrekt = true;
-		
-		String passwort = "";
-		
-		while (nichtKorrekt) {
-		
-			System.out.println("Passwort");
-			System.out.print("> ");
-			passwort = sc.nextLine();
+			System.out.print(">");
 			
-			System.out.println("Passwort bestätigen");
-			System.out.print("> ");
-			String passwort2 = sc.nextLine();
+			choice = sc.nextLine();
+			String regexChoice = "[1-2]";
 			
-			if (passwort.equals(passwort2))
-				nichtKorrekt = false;
-			else
-				System.out.println("Passwörter stimmen nicht überein.");
+			if (choice.matches(regexChoice))
+				falscheEingabe = false;
 		
 		}
 		
-		profilAnlegen(vorname, nachname, nutzername, email, passwort);
+		if (choice.equals("1")) {
+		
+			System.out.println("========================");
+			System.out.println("     Profil anlegen");
+			System.out.println("========================");
+			
+			System.out.println("Vorname");
+			System.out.print("> ");
+			String vorname = sc.nextLine();
+			
+			System.out.println("Nachname");
+			System.out.print("> ");
+			String nachname = sc.nextLine();
+			
+			System.out.println("Nutzername");
+			System.out.print("> ");
+			String nutzername = sc.nextLine();
+			
+			System.out.println("E-Mail Adresse");
+			System.out.print("> ");
+			String email = sc.nextLine();
+			
+			boolean nichtKorrekt = true;
+			
+			String passwort = "";
+			
+			while (nichtKorrekt) {
+			
+				System.out.println("Passwort");
+				System.out.print("> ");
+				passwort = sc.nextLine();
+				
+				System.out.println("Passwort bestätigen");
+				System.out.print("> ");
+				String passwort2 = sc.nextLine();
+				
+				if (passwort.equals(passwort2))
+					nichtKorrekt = false;
+				else
+					System.out.println("Passwörter stimmen nicht überein.");
+			
+			}
+			
+			profilAnlegen(vorname, nachname, nutzername, email, passwort);
+		
+		} else {
+			
+			boolean falscheEingabeAnmelden = true;
+			
+			while (falscheEingabeAnmelden) {
+			
+				System.out.println("Nutzername");
+				System.out.print("> ");
+				String nutzername = sc.nextLine();
+				
+				System.out.println("Passwort");
+				System.out.print("> ");
+				String passwort = sc.nextLine();
+				
+				if (profile.contains(nutzername)) {
+					
+					int counter = 0;
+					
+					for (Profil profil : profile) {
+						
+						if (!profil.getNutzername().equals(nutzername)) {
+							
+							counter++;
+							
+						} else {
+							
+							if (profile.get(counter).getPasswort().equals(passwort)) {
+								
+								falscheEingabeAnmelden = false;
+								anmelden(nutzername, passwort);
+								
+							}
+							
+						}
+							
+					}
+					
+				} else {
+					
+					System.out.println("Der Nutzername ist falsch.");
+					
+				}
+			
+			}
+			
+		}
 		
 	}
 	
@@ -97,6 +169,12 @@ public class App {
 		
 		profile.add(new Profil(vorname, nachname, nutzername, email, passwort));
 		System.out.println("Account erfolgreich angelegt!");
+		
+	}
+	
+	private static void anmelden (String nutzername, String passwort) {
+		
+		
 		
 	}
 

@@ -84,5 +84,17 @@ public class Profil implements Serializable {
 		this.passwort = passwort;
 	
 	}
+	
+	public String getPasswort () {
+		
+		return passwort;
+		
+	}
+	
+	public String getNutzername () {
+		
+		return nutzername;
+		
+	}
 
 }
