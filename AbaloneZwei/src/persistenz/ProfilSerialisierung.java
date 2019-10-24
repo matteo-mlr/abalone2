@@ -47,32 +47,28 @@ public class ProfilSerialisierung {
 
     private void oeffneInputstream(String benutzername) throws IOException {
 
-        String dateipfad = "../../profilSpeicher/" + benutzername;
+        String dateipfad = "AbaloneZwei\\profilSpeicher\\" + benutzername+".ser";
 
         if(in != null){
             schließen();
             in = new ObjectInputStream(new FileInputStream(dateipfad));
         }
 
-        if(in == null){
-            in = new ObjectInputStream(new FileInputStream(dateipfad));
-        }
+        in = new ObjectInputStream(new FileInputStream(dateipfad));
+
 
     }
 
     private void oeffneOutputstream(String benutzername) throws IOException {
 
-        String dateipfad = "../../profilSpeicher/" + benutzername;
+        String dateipfad = "AbaloneZwei\\profilSpeicher\\" + benutzername+".ser";
 
         if(out != null){
             schließen();
             out = new ObjectOutputStream(new FileOutputStream(dateipfad));
         }
 
-        if(out== null){
-            out = new ObjectOutputStream(new FileOutputStream(dateipfad));
-        }
-
+        out = new ObjectOutputStream(new FileOutputStream(dateipfad));
     }
 
     private void schließen() throws IOException{
@@ -85,7 +81,9 @@ public class ProfilSerialisierung {
 
     public void serialisiere(Profil profil) throws AppException{
 
-        String benutzername="";
+        if(profil == null) throw new AppException("profil ist null");
+
+        String benutzername= profil.getNutzername();
         try {
             oeffneOutputstream(benutzername);
         } catch (IOException io) {

@@ -1,14 +1,19 @@
 package abaloneZwei;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public class Profil implements Serializable {
-	
+
+	private static final long serialVersionUID = 1L;
 	private String vorname;
 	private String nachname;
 	private String nutzername;
 	private String email;
 	private String passwort;
+	private int bewertung;
+	private Verlauf verlaufTeilgenommen;
+	private Verlauf verlaufVeranstaltet;
 	
 	public Profil (String vorname, String nachname, String nutzername, String email, String passwort) {
 		
@@ -17,6 +22,9 @@ public class Profil implements Serializable {
 		setNutzername(nutzername);
 		setEmail(email);
 		setPasswort(passwort);
+		bewertung = 0;
+		verlaufTeilgenommen = new Verlauf();		
+		verlaufVeranstaltet = new Verlauf();
 		
 	}
 	
@@ -90,7 +98,7 @@ public class Profil implements Serializable {
 		return passwort;
 		
 	}
-	
+
 	public String getNutzername () {
 		
 		return nutzername;
@@ -99,7 +107,25 @@ public class Profil implements Serializable {
 
 	@Override
 	public String toString() {
+		
 		return "[ "+ vorname + " " +  nachname  + " ]";
+		
 	}
 	
+	public void berechneBewertung () {
+		
+		int durchschnitt = 0;
+		
+		ArrayList<Event> events = verlaufVeranstaltet.getEvents();
+		
+		for (Event current : events) {
+			
+			durchschnitt += current.getBewertung();
+			
+		}
+		
+		this.bewertung = durchschnitt / events.size();
+		
+	}
+
 }
