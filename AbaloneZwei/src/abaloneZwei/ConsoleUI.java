@@ -2,10 +2,13 @@ package abaloneZwei;
 
 import java.util.Scanner;
 
+import fehlermanagement.AppException;
+
 public class ConsoleUI {
 
 	private static App app = new App();
 	private static Scanner sc = new Scanner(System.in);
+	private static Profil profil;
 	
 	
 	private static final String REGEX_MENU = "[1-2]";
@@ -29,14 +32,69 @@ public class ConsoleUI {
 		}
 		
 		if(eingabe.equals("1"))
-			registrieren();
-		if(eingabe.equals("2"))
 			anmelden();
+		if(eingabe.equals("2")) {
+			registrieren();
+			anmelden();
+		}
 		
+		while(true) {
+
+			printEventMenu();
+
+			while (true) {
+
+				System.out.print(">");
+				eingabe = sc.nextLine();
+
+				if (eingabe.matches(REGEX_MENU))
+					break;
+			}
+
+			if(eingabe.equals("1"))
+				eventAnlegen();
+			if(eingabe.equals("2"))
+				anmelden();
+
+		}
+	}
 		
+	private static void eventAnlegen() {
 		
+		System.out.println("========================");
+		System.out.println("   neues Event anlegen  ");
+		System.out.println("========================");
+		
+		System.out.println("Titel");
+		System.out.print("> ");
+		String titel = sc.nextLine();
+		
+		System.out.println("Kategorie");
+		System.out.print("> ");
+		String kategorie = sc.nextLine();
+		
+		System.out.println("Zeitraum");
+		System.out.print("> ");
+		String zeitraum = sc.nextLine();
+		
+		System.out.println("Teilnehmer Anzahl");
+		System.out.print("> ");
+		String teilnehmerAnzahlString = sc.nextLine();
+		int teilnehmerAnzahl = Integer.parseInt(teilnehmerAnzahlString);
+		
+		app.getAktivesProfil().eventAnlegen(titel, kategorie, zeitraum, teilnehmerAnzahl);
 	}
 
+	private static void printEventMenu() {
+		
+		System.out.println("========================");
+		
+		System.out.println("  1 | neues Event");
+		System.out.println("  2 | meine Events anzeigen");
+		
+		System.out.println("========================");
+		
+	}
 	
 	private static void printStartMenu() {
 		
@@ -53,41 +111,31 @@ public class ConsoleUI {
 	
 	private static void anmelden() {
 
-			
-			boolean wiederhole = true;
-			
-			while (wiederhole) {
-			
-				System.out.println("Nutzername");
-				System.out.print("> ");
-				String nutzername = sc.nextLine();
-				
-				System.out.println("Passwort");
-				System.out.print("> ");
-				String passwort = sc.nextLine();
-				
-				if (app.getProfile().contains(nutzername)) {
-					
-					int counter = 0;
-					
-					for (int i = 0; i < app.getProfile().size(); i++) {
-						
-						//wenn nutzername vorhanden
-						if (app.getProfile().get(i).getNutzername().equals(nutzername)) {
-							
-							// und wenn passwort zu nutzernamen stimmt
-							if (app.getProfile().get(i).getPasswort().equals(passwort)) {
-								
-								app.anmelden(nutzername, passwort);
-								wiederhole = false;
-								break;
-							}
-						}	
-					}
-					
-					System.out.println("Der Nutzername ist falsch.");	
-				}
+		System.out.println("========================");
+		System.out.println("        Anmelden        ");
+		System.out.println("========================");
+		
+		boolean wiederhole = true;
+
+		while (wiederhole) {
+
+			System.out.println("Nutzername");
+			System.out.print("> ");
+			String nutzername = sc.nextLine();
+
+			System.out.println("Passwort");
+			System.out.print("> ");
+			String passwort = sc.nextLine();
+
+			try {
+				app.anmelden(nutzername, passwort);
+				wiederhole = false;
 			}
+
+			catch(AppException e) {
+				System.out.println("Nutzername oder Passwort falsch");
+			}
+		}
 	}
 	
 	private static void registrieren() {

@@ -7,12 +7,13 @@ import fehlermanagement.AppException;
 public class App {
 	
 	private ArrayList<Profil> profile = new ArrayList<Profil>();
+	private Profil akitvesProfil;
 	
 	public void profilAnlegen (String vorname, String nachname, String nutzername, String email, String passwort) {
 		
 		String regexVornameNachname = "[a-zA-Z]+";
 		String regexEmail = "^[a-zA-Z0-9_!#$%&’*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$";
-		String regexPasswort = "([A-Z][a-z][0-9])+";
+		String regexPasswort = "([A-Za-z0-9])+";
 		
 		try {
 		
@@ -46,14 +47,32 @@ public class App {
 		
 	}
 	
-	public void anmelden (String nutzername, String passwort) {
-		
-		
-		
+	public void anmelden (String nutzername, String passwort) throws AppException {
+			
+			for (int i = 0; i < profile.size(); i++) {
+				
+				//wenn nutzername vorhanden
+				if (profile.get(i).getNutzername().equals(nutzername)) {
+					
+					// und wenn passwort zu nutzernamen stimmt
+					if (profile.get(i).getPasswort().equals(passwort)) {
+						
+						akitvesProfil = profile.get(i);
+						return;
+					}
+				}	
+			}
+			
+			//wenn kein nutzername passt bzw passwort falsch ist wird exception geworfen
+			throw new AppException("Anmeldefehler");			
 	}
 	
 	public ArrayList<Profil> getProfile(){
 		return profile;
+	}
+	
+	public Profil getAktivesProfil() {
+		return akitvesProfil;
 	}
 
 }

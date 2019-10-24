@@ -14,6 +14,7 @@ public class Profil implements Serializable {
 	private int bewertung;
 	private Verlauf verlaufTeilgenommen;
 	private Verlauf verlaufVeranstaltet;
+	private ArrayList<Event> events = new ArrayList<Event>();
 	
 	public Profil (String vorname, String nachname, String nutzername, String email, String passwort) {
 		
@@ -26,6 +27,10 @@ public class Profil implements Serializable {
 		verlaufTeilgenommen = new Verlauf();		
 		verlaufVeranstaltet = new Verlauf();
 		
+	}
+	
+	public void eventAnlegen(String titel,String kategorie, String zeitraum,int teilnehmerAnzahl) {
+		events.add(new Event(this, titel, kategorie, zeitraum, teilnehmerAnzahl));
 	}
 	
 	private void setVorname (String vorname) {

@@ -6,7 +6,7 @@ public class Event {
 	private String titel;
 	private String beschreibung;
 	private String kategorie;
-	private String zeitraum;  //nur tempor�r String
+	private String zeitraum;  //nur temporär String
 	private Profil[] teilnehmer;
 	private int teilnehmerAnzahl;
 	private Rezension[] rezensionen;
