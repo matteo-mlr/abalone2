@@ -26,7 +26,7 @@ public class AppException extends Exception {
 		
 		try {
 
-			pWriter = new PrintWriter(new BufferedWriter(new FileWriter("log.txt", true)));
+			pWriter = new PrintWriter(new BufferedWriter(new FileWriter("error.log", true)));
 			pWriter.println(dtf.format(now) + " " + getMessage());
 
 		} catch (IOException ioe) {
