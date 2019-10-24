@@ -1,6 +1,8 @@
 package abaloneZwei;
 
-public class Profil {
+import java.io.Serializable;
+
+public class Profil implements Serializable {
 	
 	private String vorname;
 	private String nachname;
