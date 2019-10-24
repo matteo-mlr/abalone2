@@ -72,14 +72,14 @@ public class Profil {
 
 	private void setPasswort (String passwort) {
 	
-	if (passwort == null) {
+		if (passwort == null) {
+			
+			// Fehlermanagement
+			return;
+			
+		}
 		
-		// Fehlermanagement
-		return;
-		
-	}
-	
-	this.passwort = passwort;
+		this.passwort = passwort;
 	
 	}
 
