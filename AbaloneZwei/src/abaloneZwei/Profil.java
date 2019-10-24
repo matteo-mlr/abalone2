@@ -4,11 +4,14 @@ import java.io.Serializable;
 
 public class Profil implements Serializable {
 
+	private static final long serialVersionUID = 1L;
 	private String vorname;
 	private String nachname;
 	private String nutzername;
 	private String email;
 	private String passwort;
+	private int bewertung;
+	private Verlauf verlauf;
 	
 	public Profil (String vorname, String nachname, String nutzername, String email, String passwort) {
 		
@@ -17,6 +20,8 @@ public class Profil implements Serializable {
 		setNutzername(nutzername);
 		setEmail(email);
 		setPasswort(passwort);
+		bewertung = 0;
+		verlauf = new Verlauf();
 		
 	}
 	
@@ -91,13 +96,17 @@ public class Profil implements Serializable {
 		
 	}
 
-	public String getNutzername(){
+	public String getNutzername () {
+		
 		return nutzername;
+		
 	}
 
 	@Override
 	public String toString() {
+		
 		return "[ "+ vorname + " " +  nachname  + " ]";
+		
 	}
 
 }
