@@ -18,4 +18,10 @@ public class Verlauf {
 		
 	}
 	
+	public int getAnzahl () {
+		
+		return events.size();
+		
+	}
+ 	
 }

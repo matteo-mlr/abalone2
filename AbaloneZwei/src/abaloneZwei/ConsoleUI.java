@@ -13,7 +13,9 @@ public class ConsoleUI {
 	private static Profil profil;
 	
 	
-	private static final String REGEX_MENU = "[1-2]";
+	private static final String REGEX_MENU_ANMELDEN_REGISTRIEREN = "[1-2]";
+	private static final String REGEX_MENU_ANGEMELDET = "[1-3]";
+	private static final String REGEX_MENU_PROFIL = "[1-3]";
 	
 	
 	
@@ -29,7 +31,7 @@ public class ConsoleUI {
 			System.out.print(">");
 			eingabe = sc.nextLine();
 		
-			if (eingabe.matches(REGEX_MENU))
+			if (eingabe.matches(REGEX_MENU_ANMELDEN_REGISTRIEREN))
 				break;
 		}
 		
@@ -42,14 +44,14 @@ public class ConsoleUI {
 		
 		while(true) {
 
-			printEventMenu();
+			printMenu();
 
 			while (true) {
 
 				System.out.print(">");
 				eingabe = sc.nextLine();
 
-				if (eingabe.matches(REGEX_MENU))
+				if (eingabe.matches(REGEX_MENU_ANGEMELDET))
 					break;
 			}
 
@@ -57,8 +59,76 @@ public class ConsoleUI {
 				eventAnlegen();
 			if(eingabe.equals("2"))
 				eventsAnzeigen();
+			if(eingabe.equals("3")) {
+				
+				profilMenu();
+				
+				while (true) {
+				
+					System.out.print(">");
+					eingabe = sc.nextLine();
+					
+					if (eingabe.matches(REGEX_MENU_PROFIL)) {
+						
+						if (eingabe.equals("1"))
+							System.out.println(app.getAktivesProfil().toString());
+						
+						if (eingabe.equals("2")) {
+							
+							System.out.println("Altes Passwort: ");
+							String neuesPasswort = "";
+							
+							while (true) {
+
+								System.out.print(">");
+								eingabe = sc.nextLine();
+								
+								if (eingabe.equals(app.getAktivesProfil().getPasswort()))
+									break;
+								else
+									System.out.println("Falsches Passwort.");
+							
+							}
+							
+							while (true) {
+								
+								System.out.println("Neues Passwort: ");
+								System.out.print(">");
+								neuesPasswort = sc.nextLine();
+								
+								System.out.println("Neues Passwort wiederholen: ");
+								System.out.print(">");
+								eingabe = sc.nextLine();
+								
+								if (neuesPasswort.equals(eingabe))
+									break;
+								else
+									System.out.println("Versuchen Sie es erneut.");
+								
+							}
+							
+							app.getAktivesProfil().passwortÄndern(neuesPasswort);
+							System.out.println("Ihr Passwort wurde erfolgreich geändert!");
+							
+						}
+						
+						if (eingabe.equals("3")) {
+							
+							app.abmelden();
+							System.exit(0);
+							
+						}
+						
+						break;
+						
+					}
+				
+				}
+				
+			}
 
 		}
+		
 	}
 		
 	
@@ -100,12 +170,25 @@ public class ConsoleUI {
 		app.getAktivesProfil().eventAnlegen(titel, kategorie, zeitraum, teilnehmerAnzahl);
 	}
 
-	private static void printEventMenu() {
+	private static void printMenu() {
 		
 		System.out.println("========================");
 		
-		System.out.println("  1 | neues Event");
-		System.out.println("  2 | meine Events anzeigen");
+		System.out.println("  1 | Neues Event");
+		System.out.println("  2 | Meine Events anzeigen");
+		System.out.println("  3 | Mein Profil");
+		
+		System.out.println("========================");
+		
+	}
+	
+	private static void profilMenu () {
+		
+		System.out.println("========================");
+		
+		System.out.println("  1 | Profil anzeigen");
+		System.out.println("  2 | Passwort ändern");
+		System.out.println("  3 | Abmelden");
 		
 		System.out.println("========================");
 		

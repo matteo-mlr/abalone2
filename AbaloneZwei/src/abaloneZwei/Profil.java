@@ -117,7 +117,22 @@ public class Profil implements Serializable {
 	@Override
 	public String toString() {
 		
-		return "[ "+ vorname + " " +  nachname  + " ]";
+		StringBuilder sb = new StringBuilder(1000);
+		
+		sb.append("========================\n");
+		sb.append("     Dein Profil\n");
+		sb.append("========================\n");
+		sb.append("\n");
+		sb.append(this.vorname + " " + this.nachname + "\n");
+		sb.append(this.nutzername + "\n\n");
+		sb.append("========================\n\n");
+		sb.append("Events veranstaltet: \n");
+		sb.append(verlaufVeranstaltet.getAnzahl() + "\n");
+		sb.append("Events teilgenommen: \n");
+		sb.append(verlaufTeilgenommen.getAnzahl() + "\n");
+		sb.append("========================\n");
+		
+		return sb.toString();
 		
 	}
 	
@@ -134,6 +149,12 @@ public class Profil implements Serializable {
 		}
 		
 		this.bewertung = durchschnitt / events.size();
+		
+	}
+	
+	public void passwortÄndern (String neuesPasswort) {
+		
+		this.passwort = neuesPasswort;
 		
 	}
 

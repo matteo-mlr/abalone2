@@ -7,7 +7,7 @@ import fehlermanagement.AppException;
 public class App {
 	
 	private ArrayList<Profil> profile = new ArrayList<Profil>();
-	private Profil akitvesProfil;
+	private Profil aktivesProfil;
 	
 	public App() {
 		
@@ -16,9 +16,8 @@ public class App {
 	
 	public void profilAnlegen (String vorname, String nachname, String nutzername, String email, String passwort) {
 		
-		String regexVornameNachname = "[a-zA-Z]+";
+		String regexVornameNachname = "[A-Za-zÄÜÖäüö]+";
 		String regexEmail = "^[a-zA-Z0-9_!#$%&’*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$";
-		String regexPasswort = "([A-Za-z0-9])+";
 		
 		try {
 		
@@ -30,9 +29,7 @@ public class App {
 			
 				||!vorname.matches(regexVornameNachname) || !nachname.matches(regexVornameNachname)
 
-				||!email.matches(regexEmail)
-						
-				||!passwort.matches(regexPasswort)) {
+				||!email.matches(regexEmail)) {
 					
 					throw new AppException("Falsche Eingabe.");
 						
@@ -62,7 +59,7 @@ public class App {
 					// und wenn passwort zu nutzernamen stimmt
 					if (profile.get(i).getPasswort().equals(passwort)) {
 						
-						akitvesProfil = profile.get(i);
+						aktivesProfil = profile.get(i);
 						return;
 					}
 				}	
@@ -72,12 +69,18 @@ public class App {
 			throw new AppException("Anmeldefehler");			
 	}
 	
+	public void abmelden () {
+		
+		aktivesProfil = null;
+		
+	}
+	
 	public ArrayList<Profil> getProfile(){
 		return profile;
 	}
 	
 	public Profil getAktivesProfil() {
-		return akitvesProfil;
+		return aktivesProfil;
 	}
 
 }
