@@ -3,6 +3,8 @@ package abaloneZwei;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+import fehlermanagement.AppFalscheEingabeException;
+
 public class Profil implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -39,11 +41,15 @@ public class Profil implements Serializable {
 	
 	private void setVorname (String vorname) {
 		
-		if (vorname == null) {
-			
-			// Fehlermanagement
-			return;
-			
+		try {
+		
+			if (vorname == null) {
+				
+				throw new AppFalscheEingabeException("Ungültiger Vorname: " + vorname);
+				
+			}
+		
+		} catch (AppFalscheEingabeException afee) {
 		}
 		
 		this.vorname = vorname;
@@ -52,11 +58,15 @@ public class Profil implements Serializable {
 	
 	private void setNachname (String nachname) {
 		
-		if (nachname == null) {
+		try {
 			
-			// Fehlermanagement
-			return;
-			
+			if (nachname == null) {
+				
+				throw new AppFalscheEingabeException("Ungültiger Nachname: " + nachname);
+				
+			}
+		
+		} catch (AppFalscheEingabeException afee) {
 		}
 		
 		this.nachname = nachname;
@@ -65,11 +75,15 @@ public class Profil implements Serializable {
 	
 	private void setNutzername (String nutzername) {
 		
-		if (nutzername == null) {
+		try {
 			
-			// Fehlermanagement
-			return;
-			
+			if (nutzername == null) {
+				
+				throw new AppFalscheEingabeException("Ungültiger Nutzername: " + nutzername);
+				
+			}
+		
+		} catch (AppFalscheEingabeException afee) {
 		}
 		
 		this.nutzername = nutzername;
@@ -78,11 +92,15 @@ public class Profil implements Serializable {
 	
 	private void setEmail (String email) {
 		
-		if (email == null) {
+		try {
 			
-			// Fehlermanagement
-			return;
-			
+			if (email == null) {
+				
+				throw new AppFalscheEingabeException("Ungültige E-Mail: " + email);
+				
+			}
+		
+		} catch (AppFalscheEingabeException afee) {
 		}
 		
 		this.email = email;
@@ -91,11 +109,15 @@ public class Profil implements Serializable {
 
 	private void setPasswort (String passwort) {
 	
-		if (passwort == null) {
+		try {
 			
-			// Fehlermanagement
-			return;
-			
+			if (passwort == null) {
+				
+				throw new AppFalscheEingabeException("Ungültiges Passwort: " + passwort);
+				
+			}
+		
+		} catch (AppFalscheEingabeException afee) {
 		}
 		
 		this.passwort = passwort;
@@ -130,6 +152,9 @@ public class Profil implements Serializable {
 		sb.append(verlaufVeranstaltet.getAnzahl() + "\n");
 		sb.append("Events teilgenommen: \n");
 		sb.append(verlaufTeilgenommen.getAnzahl() + "\n");
+		sb.append("========================\n");
+		sb.append("Bewertung: \n");
+		sb.append(this.bewertung + "\n");
 		sb.append("========================\n");
 		
 		return sb.toString();
