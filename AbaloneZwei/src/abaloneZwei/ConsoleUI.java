@@ -12,7 +12,6 @@ public class ConsoleUI {
 	private static Scanner sc = new Scanner(System.in);
 	private static Profil profil;
 	
-	
 	private static final String REGEX_MENU_ANMELDEN_REGISTRIEREN = "[1-2]";
 	private static final String REGEX_MENU_ANGEMELDET = "[1-3]";
 	private static final String REGEX_MENU_PROFIL = "[1-3]";
@@ -20,113 +19,117 @@ public class ConsoleUI {
 	
 	
 	public static void main(String[] args) {
-
-		
-		printStartMenu();
 		
 		String eingabe;
 		
+		outerloop:
 		while (true) {
-			
-			System.out.print(">");
-			eingabe = sc.nextLine();
 		
-			if (eingabe.matches(REGEX_MENU_ANMELDEN_REGISTRIEREN))
-				break;
-		}
-		
-		if(eingabe.equals("1"))
-			anmelden();
-		if(eingabe.equals("2")) {
-			registrieren();
-			anmelden();
-		}
-		
-		while(true) {
-
-			printMenu();
-
+			printStartMenu();
+				
 			while (true) {
-
+				
 				System.out.print(">");
 				eingabe = sc.nextLine();
-
-				if (eingabe.matches(REGEX_MENU_ANGEMELDET))
+			
+				if (eingabe.matches(REGEX_MENU_ANMELDEN_REGISTRIEREN))
 					break;
 			}
-
+			
 			if(eingabe.equals("1"))
-				eventAnlegen();
-			if(eingabe.equals("2"))
-				eventsAnzeigen();
-			if(eingabe.equals("3")) {
-				
-				profilMenu();
-				
+				anmelden();
+			if(eingabe.equals("2")) {
+				registrieren();
+				anmelden();
+			}
+			
+			while(true) {
+	
+				printMenu();
+	
 				while (true) {
-				
+	
 					System.out.print(">");
 					eingabe = sc.nextLine();
-					
-					if (eingabe.matches(REGEX_MENU_PROFIL)) {
-						
-						if (eingabe.equals("1"))
-							System.out.println(app.getAktivesProfil().toString());
-						
-						if (eingabe.equals("2")) {
-							
-							System.out.println("Altes Passwort: ");
-							String neuesPasswort = "";
-							
-							while (true) {
-
-								System.out.print(">");
-								eingabe = sc.nextLine();
-								
-								if (eingabe.equals(app.getAktivesProfil().getPasswort()))
-									break;
-								else
-									System.out.println("Falsches Passwort.");
-							
-							}
-							
-							while (true) {
-								
-								System.out.println("Neues Passwort: ");
-								System.out.print(">");
-								neuesPasswort = sc.nextLine();
-								
-								System.out.println("Neues Passwort wiederholen: ");
-								System.out.print(">");
-								eingabe = sc.nextLine();
-								
-								if (neuesPasswort.equals(eingabe))
-									break;
-								else
-									System.out.println("Versuchen Sie es erneut.");
-								
-							}
-							
-							app.getAktivesProfil().passwortÄndern(neuesPasswort);
-							System.out.println("Ihr Passwort wurde erfolgreich geändert!");
-							
-						}
-						
-						if (eingabe.equals("3")) {
-							
-							app.abmelden();
-							System.exit(0);
-							
-						}
-						
+	
+					if (eingabe.matches(REGEX_MENU_ANGEMELDET))
 						break;
+				}
+	
+				if(eingabe.equals("1"))
+					eventAnlegen();
+				if(eingabe.equals("2"))
+					eventsAnzeigen();
+				if(eingabe.equals("3")) {
+					
+					profilMenu();
+					
+					while (true) {
+					
+						System.out.print(">");
+						eingabe = sc.nextLine();
+						
+						if (eingabe.matches(REGEX_MENU_PROFIL)) {
+							
+							if (eingabe.equals("1"))
+								System.out.println(app.getAktivesProfil().toString());
+							
+							if (eingabe.equals("2")) {
+								
+								System.out.println("Altes Passwort: ");
+								String neuesPasswort = "";
+								
+								while (true) {
+	
+									System.out.print(">");
+									eingabe = sc.nextLine();
+									
+									if (eingabe.equals(app.getAktivesProfil().getPasswort()))
+										break;
+									else
+										System.out.println("Falsches Passwort.");
+								
+								}
+								
+								while (true) {
+									
+									System.out.println("Neues Passwort: ");
+									System.out.print(">");
+									neuesPasswort = sc.nextLine();
+									
+									System.out.println("Neues Passwort wiederholen: ");
+									System.out.print(">");
+									eingabe = sc.nextLine();
+									
+									if (neuesPasswort.equals(eingabe))
+										break;
+									else
+										System.out.println("Versuchen Sie es erneut.");
+									
+								}
+								
+								app.getAktivesProfil().passwortÄndern(neuesPasswort);
+								System.out.println("Ihr Passwort wurde erfolgreich geändert!");
+								
+							}
+							
+							if (eingabe.equals("3")) {
+								
+								app.abmelden();
+								continue outerloop;
+								
+							}
+							
+							break;
+							
+						}
 						
 					}
-				
+					
 				}
-				
+	
 			}
-
+		
 		}
 		
 	}
