@@ -21,7 +21,7 @@ public class ProfilSerialisierung {
         try {
             oeffneInputstream(benutzername);
         } catch (IOException e) {
-            throw new AppException("Fehler beim Datei oeffnen.");
+            throw new AppException("Fehler beim Datei oeffnen.", benutzername);
         }
 
         Object tmp;
@@ -29,20 +29,20 @@ public class ProfilSerialisierung {
         try {
             tmp = in.readObject();
         } catch (Exception e) {
-            throw new AppException("Fehler beim Datei einlesen.");
+            throw new AppException("Fehler beim Datei einlesen.", benutzername);
         }
 
         try {
             schließen();
         } catch (IOException io) {
-            throw new AppException("Fehler beim Schließen des Inputstreams");
+            throw new AppException("Fehler beim Schließen des Inputstreams", benutzername);
         }
 
 
         if(tmp instanceof Profil)
             return (Profil)tmp;
         else
-            throw new AppException("Eingelesene Datei ist kein Profil.");
+            throw new AppException("Eingelesene Datei ist kein Profil.", benutzername);
     }
 
     private void oeffneInputstream(String benutzername) throws IOException {
@@ -81,24 +81,24 @@ public class ProfilSerialisierung {
 
     public void serialisiere(Profil profil) throws AppException{
 
-        if(profil == null) throw new AppException("profil ist null");
+        if(profil == null) throw new AppException("profil ist null", profil.getNutzername());
 
         String benutzername= profil.getNutzername();
         try {
             oeffneOutputstream(benutzername);
         } catch (IOException io) {
-            throw new AppException("Fehler beim Datei öffnen.");
+            throw new AppException("Fehler beim Datei öffnen.", profil.getNutzername());
         }
         try {
             out.writeObject(profil);
         } catch (IOException io) {
-            throw new AppException("Fehler beim Schreiben des Profils.");
+            throw new AppException("Fehler beim Schreiben des Profils.", profil.getNutzername());
         }
 
         try {
             schließen();
         } catch (IOException io) {
-            throw new AppException("Fehler beim Schließen des Outputstreams");
+            throw new AppException("Fehler beim Schließen des Outputstreams", profil.getNutzername());
         }
 
 

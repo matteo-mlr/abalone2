@@ -45,7 +45,7 @@ public class Profil implements Serializable {
 		
 			if (vorname == null) {
 				
-				throw new AppFalscheEingabeException("Ungültiger Vorname: " + vorname);
+				throw new AppFalscheEingabeException("Ungültiger Vorname", this.nutzername);
 				
 			}
 		
@@ -62,7 +62,7 @@ public class Profil implements Serializable {
 			
 			if (nachname == null) {
 				
-				throw new AppFalscheEingabeException("Ungültiger Nachname: " + nachname);
+				throw new AppFalscheEingabeException("Ungültiger Nachname", this.nutzername);
 				
 			}
 		
@@ -79,7 +79,7 @@ public class Profil implements Serializable {
 			
 			if (nutzername == null) {
 				
-				throw new AppFalscheEingabeException("Ungültiger Nutzername: " + nutzername);
+				throw new AppFalscheEingabeException("Ungültiger Nutzername", this.nutzername);
 				
 			}
 		
@@ -96,7 +96,7 @@ public class Profil implements Serializable {
 			
 			if (email == null) {
 				
-				throw new AppFalscheEingabeException("Ungültige E-Mail: " + email);
+				throw new AppFalscheEingabeException("Ungültige E-Mail", this.nutzername);
 				
 			}
 		
@@ -113,7 +113,7 @@ public class Profil implements Serializable {
 			
 			if (passwort == null) {
 				
-				throw new AppFalscheEingabeException("Ungültiges Passwort: " + passwort);
+				throw new AppFalscheEingabeException("Ungültiges Passwort", this.nutzername);
 				
 			}
 		
