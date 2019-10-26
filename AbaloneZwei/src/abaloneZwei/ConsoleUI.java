@@ -139,6 +139,13 @@ public class ConsoleUI {
 		
 		ArrayList<Event> events = app.getAktivesProfil().getEvents();
 		
+		if (events.size() == 0) {
+			
+			System.out.println("Sie haben noch keine Events.");
+			return;
+			
+		}
+		
 		for (int i = 0; i < events.size(); i++) {
 			System.out.println((i+1) + ". " + events.get(i).getTitel());
 			

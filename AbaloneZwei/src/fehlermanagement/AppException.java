@@ -13,21 +13,21 @@ public class AppException extends Exception {
 	private transient DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd.MM.uuuu HH:mm");
 	private transient LocalDateTime now = LocalDateTime.now();
 	
-	public AppException (String fehler) {
+	public AppException (String fehler, String user) {
 		
 		super(fehler);
-		addToLog();
+		addToLog(user);
 		
 	}
 	
-	private void addToLog() {
+	private void addToLog(String user) {
 
 		PrintWriter pWriter = null;
 		
 		try {
 
 			pWriter = new PrintWriter(new BufferedWriter(new FileWriter("error.log", true)));
-			pWriter.println(dtf.format(now) + " " + getMessage());
+			pWriter.println(dtf.format(now) + " " + getMessage() + " | User: " + user);
 
 		} catch (IOException ioe) {
 			

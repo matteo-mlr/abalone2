@@ -31,7 +31,7 @@ public class App {
 
 				||!email.matches(regexEmail)) {
 					
-					throw new AppException("Falsche Eingabe.");
+					throw new AppException("Falsche Eingabe.", getAktivesProfil() == null ? "" : getAktivesProfil().getNutzername());
 						
 				}
 			
@@ -66,7 +66,7 @@ public class App {
 			}
 			
 			//wenn kein nutzername passt bzw passwort falsch ist wird exception geworfen
-			throw new AppException("Anmeldefehler");			
+			throw new AppException("Anmeldefehler", getAktivesProfil() == null ? "" : getAktivesProfil().getNutzername());			
 	}
 	
 	public void abmelden () {
