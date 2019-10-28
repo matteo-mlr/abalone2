@@ -16,7 +16,8 @@ public class Profil implements Serializable {
 	private int bewertung;
 	private Verlauf verlaufTeilgenommen;
 	private Verlauf verlaufVeranstaltet;
-	private ArrayList<Event> events = new ArrayList<Event>();
+	private ArrayList<Event> meineEvents = new ArrayList<Event>();
+	private ArrayList<Event> feed = new ArrayList<Event>();
 	
 	public Profil (String vorname, String nachname, String nutzername, String email, String passwort) {
 		
@@ -29,14 +30,27 @@ public class Profil implements Serializable {
 		verlaufTeilgenommen = new Verlauf();		
 		verlaufVeranstaltet = new Verlauf();
 		
+		//test events
+		eventAnlegen("Chili Sin Carne","Fleisch", "19:00 - 20:00",2);
+		eventAnlegen("lecker Fich","Fisch", "18:00 - 19:00",1);
+		eventAnlegen("Wok","Wok", "17:00 - 19:30",4);
+		
+		feed.add(meineEvents.get(0));
+		feed.add(meineEvents.get(1));
+		feed.add(meineEvents.get(2));
+		
+	}
+	
+	public ArrayList<Event> getFeed(){
+		return feed;
 	}
 	
 	public void eventAnlegen(String titel,String kategorie, String zeitraum,int teilnehmerAnzahl) {
-		events.add(new Event(this, titel, kategorie, zeitraum, teilnehmerAnzahl));
+		meineEvents.add(new Event(this, titel, kategorie, zeitraum, teilnehmerAnzahl));
 	}
 	
-	public ArrayList<Event> getEvents() {
-		return events;
+	public ArrayList<Event> getMeineEvents() {
+		return meineEvents;
 	}
 	
 	private void setVorname (String vorname) {
