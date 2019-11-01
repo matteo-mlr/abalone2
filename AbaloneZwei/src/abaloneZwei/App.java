@@ -1,17 +1,21 @@
 package abaloneZwei;
 
 import java.util.ArrayList;
-import java.util.Scanner;
+
 import fehlermanagement.AppException;
 
 public class App {
 	
 	private ArrayList<Profil> profile = new ArrayList<Profil>();
 	private Profil aktivesProfil;
+	private DBSchnittstelle dbSchnittstelle;
 	
 	public App() {
 		
 		profile.add(new Profil("admin", "admin", "admin", "admin@mail.de", "admin"));
+		
+		dbSchnittstelle = new DBSchnittstelle();
+		
 	}
 	
 	public void profilAnlegen (String vorname, String nachname, String nutzername, String email, String passwort) {
@@ -45,6 +49,7 @@ public class App {
 //Profil anlegen
 		
 		profile.add(new Profil(vorname, nachname, nutzername, email, passwort));
+		dbSchnittstelle.profilAnlegen(vorname, nachname, nutzername, passwort, email); 
 		System.out.println("Account erfolgreich angelegt!");
 		
 	}
