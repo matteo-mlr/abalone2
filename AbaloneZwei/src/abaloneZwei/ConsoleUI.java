@@ -181,6 +181,7 @@ public class ConsoleUI {
 		int teilnehmerAnzahl = Integer.parseInt(teilnehmerAnzahlString);
 		
 		app.getAktivesProfil().eventAnlegen(titel, kategorie, zeitraum, teilnehmerAnzahl);
+		
 	}
 
 	private static void printMenu() {

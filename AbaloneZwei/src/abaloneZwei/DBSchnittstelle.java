@@ -3,6 +3,7 @@ package abaloneZwei;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 
 public class DBSchnittstelle {
@@ -19,21 +20,43 @@ public class DBSchnittstelle {
 			
 			stt = con.createStatement();
 			
-			stt.execute("CREATE TABLE IF NOT EXISTS profil (\n" + 
-					"    id BIGINT AUTO_INCREMENT,\n" + 
-					"    vorname VARCHAR(20) NOT NULL,\n" + 
-					"    nachname VARCHAR(20) NOT NULL,\n" + 
-					"    nutzername VARCHAR(30) NOT NULL,\n" + 
-					"    passwort VARCHAR(40) NOT NULL,\n" + 
-					"    email VARCHAR(25) NOT NULL,\n" + 
-					"    PRIMARY KEY (id)\n" + 
-					");");
+			initDB();
 			
 		} catch (Exception e) {
 		
 			e.printStackTrace();
 			
 		}
+		
+	}
+	
+	private void initDB () throws SQLException {
+		
+		stt.execute("CREATE TABLE IF NOT EXISTS profil (\n" + 
+				"    id BIGINT AUTO_INCREMENT,\n" + 
+				"    vorname VARCHAR(20) NOT NULL,\n" + 
+				"    nachname VARCHAR(20) NOT NULL,\n" + 
+				"    nutzername VARCHAR(30) NOT NULL,\n" + 
+				"    passwort VARCHAR(40) NOT NULL,\n" + 
+				"    email VARCHAR(25) NOT NULL,\n" + 
+				"    PRIMARY KEY (id)\n" + 
+				");");
+		
+		stt.execute("CREATE TABLE IF NOT EXISTS aktion (\n" + 
+				"    id BIGINT AUTO_INCREMENT,\n" + 
+				"    titel VARCHAR(20) NOT NULL,\n" + 
+				"    beschreibung VARCHAR(200) NOT NULL,\n" + 
+				"    kategorie BIGINT NOT NULL,\n" + 
+				"    zeitraum VARCHAR(20) NOT NULL,\n" + 
+				"    teilnehmerAnz INT NOT NULL,\n" + 
+				"    PRIMARY KEY (id)\n" + 
+				");");
+		
+//		stt.execute("CREATE TABLE IF NOT EXISTS kategorie (\n" + 
+//				"    id BIGINT AUTO_INCREMENT,\n" + 
+//				"    kategorie VARCHAR(20) NOT NULL,\n" + 
+//				"    PRIMARY KEY (id)\n" + 
+//				");");		
 		
 	}
 	
@@ -46,6 +69,24 @@ public class DBSchnittstelle {
 			stt.execute(profilAnlegen + "(\"" + vorname + "\",\"" + nachname + "\",\"" + nutzername + "\",\"" + passwort + "\",\"" + email + "\");");
 			System.out.println("Profil in DB angelegt.");
 		
+		} catch (Exception e) {
+			
+			e.printStackTrace();
+			
+		}
+		
+	}
+	
+	public void eventAnlegen (String titel, int kategorie, String zeitraum, int teilnehmerAnz) {
+		
+		String eventAnlegen = "INSERT INTO aktion (titel, beschreibung, kategorie, zeitraum, teilnehmerAnz) VALUES ";
+		
+		try {
+			
+			stt.execute(eventAnlegen + "(\"" + titel + "\",\"" + "Test" + "\",\"" + 
+						kategorie + "\",\"" + zeitraum + "\",\"" + teilnehmerAnz + "\");");
+			System.out.println("Event in DB angelegt.");
+			
 		} catch (Exception e) {
 			
 			e.printStackTrace();
