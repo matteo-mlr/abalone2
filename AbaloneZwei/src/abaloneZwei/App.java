@@ -48,27 +48,36 @@ public class App {
 		
 //Profil anlegen
 		
-		profile.add(new Profil(vorname, nachname, nutzername, email, passwort));
+//		profile.add(new Profil(vorname, nachname, nutzername, email, passwort));
 		dbSchnittstelle.profilAnlegen(vorname, nachname, nutzername, passwort, email); 
 		System.out.println("Account erfolgreich angelegt!");
 		
 	}
 	
 	public void anmelden (String nutzername, String passwort) throws AppException {
+		
+			Profil profil = dbSchnittstelle.getProfil(nutzername, passwort);
 			
-			for (int i = 0; i < profile.size(); i++) {
+			if (profil != null) {
 				
-				//wenn nutzername vorhanden
-				if (profile.get(i).getNutzername().equals(nutzername)) {
-					
-					// und wenn passwort zu nutzernamen stimmt
-					if (profile.get(i).getPasswort().equals(passwort)) {
-						
-						aktivesProfil = profile.get(i);
-						return;
-					}
-				}	
+				aktivesProfil = profil;
+				return;
+				
 			}
+			
+//			for (int i = 0; i < profile.size(); i++) {
+//				
+//				//wenn nutzername vorhanden
+//				if (profile.get(i).getNutzername().equals(nutzername)) {
+//					
+//					// und wenn passwort zu nutzernamen stimmt
+//					if (profile.get(i).getPasswort().equals(passwort)) {
+//						
+//						aktivesProfil = profile.get(i);
+//						return;
+//					}
+//				}	
+//			}
 			
 			//wenn kein nutzername passt bzw passwort falsch ist wird exception geworfen
 			throw new AppException("Anmeldefehler", getAktivesProfil() == null ? "" : getAktivesProfil().getNutzername());			

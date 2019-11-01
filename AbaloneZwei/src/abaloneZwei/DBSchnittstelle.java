@@ -2,6 +2,7 @@ package abaloneZwei;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.Statement;
 
 public class DBSchnittstelle {
@@ -50,6 +51,42 @@ public class DBSchnittstelle {
 			e.printStackTrace();
 			
 		}
+		
+	}
+	
+	public Profil getProfil (String nutzername, String passwort) {
+		
+		String getProfileNutzernameUndPasswort = "SELECT * FROM profil WHERE profil.nutzername = \"" + nutzername + "\";";
+		
+		try {
+		
+			ResultSet rs = stt.executeQuery(getProfileNutzernameUndPasswort); 
+			
+			while (rs.next()) {
+				
+				String nutzernameResult = rs.getString("nutzername");
+				String passwortResult = rs.getString("passwort");
+				
+				if (nutzernameResult.equals(nutzername)) {
+					
+					if (passwortResult.equals(passwort)) {
+						
+						return new Profil(rs.getString("vorname"), rs.getString("nachname"), rs.getString("nutzername"), rs.getString("passwort"), rs.getString("email"));
+						
+					}
+					
+				}
+				
+			}
+			
+		
+		} catch (Exception e) {
+			
+			e.printStackTrace();
+			
+		}
+		
+		return null;
 		
 	}
 
