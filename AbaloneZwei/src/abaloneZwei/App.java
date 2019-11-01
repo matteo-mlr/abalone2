@@ -1,5 +1,6 @@
 package abaloneZwei;
 
+import java.sql.ResultSet;
 import java.util.ArrayList;
 
 import fehlermanagement.AppException;
@@ -86,6 +87,12 @@ public class App {
 	public void eventAnlegen (String titel, int kategorie, String zeitraum, int teilnehmerAnzahl) {
 		
 		dbSchnittstelle.eventAnlegen(aktivesProfil.getNutzername(), titel, kategorie, zeitraum, teilnehmerAnzahl);
+		
+	}
+	
+	public ArrayList<Event> getAlleEvents () {
+		
+		return dbSchnittstelle.getAlleEvents();
 		
 	}
 	

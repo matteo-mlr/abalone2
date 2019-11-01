@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 public class DBSchnittstelle {
 	
@@ -154,6 +155,36 @@ public class DBSchnittstelle {
 		}
 		
 		return null;
+		
+	}
+	
+	public ArrayList<Event> getAlleEvents () {
+		
+		String getAlleEvents = "SELECT * FROM aktion";
+		ArrayList<Event> alleEvents = new ArrayList<>();
+		
+		try {
+		
+		ResultSet rs = stt.executeQuery(getAlleEvents);
+		
+		while (rs.next()) {
+			
+			String titel = rs.getString("titel");
+			String kategorie = "" + rs.getInt("kategorie");
+			String zeitraum = rs.getString("zeitraum");
+			int teilnehmerAnz = rs.getInt("teilnehmerAnz");
+			
+			alleEvents.add(new Event(null, titel, kategorie, zeitraum, teilnehmerAnz));
+			
+		}
+		
+		} catch (Exception e) {
+			
+			e.printStackTrace();
+			
+		}
+		
+		return alleEvents;
 		
 	}
 

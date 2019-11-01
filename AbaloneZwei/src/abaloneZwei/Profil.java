@@ -30,14 +30,14 @@ public class Profil implements Serializable {
 		verlaufTeilgenommen = new Verlauf();		
 		verlaufVeranstaltet = new Verlauf();
 		
-		//test events
-		eventAnlegen("Chili Sin Carne","Fleisch", "19:00 - 20:00",2);
-		eventAnlegen("lecker Fich","Fisch", "18:00 - 19:00",1);
-		eventAnlegen("Wok","Wok", "17:00 - 19:30",4);
-		
-		feed.add(meineEvents.get(0));
-		feed.add(meineEvents.get(1));
-		feed.add(meineEvents.get(2));
+//		//test events
+//		eventAnlegen("Chili Sin Carne","Fleisch", "19:00 - 20:00",2);
+//		eventAnlegen("lecker Fich","Fisch", "18:00 - 19:00",1);
+//		eventAnlegen("Wok","Wok", "17:00 - 19:30",4);
+//		
+//		feed.add(meineEvents.get(0));
+//		feed.add(meineEvents.get(1));
+//		feed.add(meineEvents.get(2));
 		
 	}
 	

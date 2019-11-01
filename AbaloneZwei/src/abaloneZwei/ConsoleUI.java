@@ -13,7 +13,7 @@ public class ConsoleUI {
 	private static Profil profil;
 	
 	private static final String REGEX_MENU_ANMELDEN_REGISTRIEREN = "[1-2]";
-	private static final String REGEX_MENU_ANGEMELDET = "[1-4]";
+	private static final String REGEX_MENU_ANGEMELDET = "[1-5]";
 	private static final String REGEX_MENU_PROFIL = "[1-3]";
 	
 	
@@ -127,8 +127,21 @@ public class ConsoleUI {
 					}
 					
 				}
+				
 				if(eingabe.equals("4")) {
 					System.out.println(app.getAktivesProfil().getFeed());
+				}
+				
+				if(eingabe.equals("5")) {
+					
+					ArrayList<Event> alleEvents = app.getAlleEvents();
+					
+					for (Event e : alleEvents) {
+						
+						System.out.println(e.getTitel() + " | " + e.getKategorie() + " | " + e.getZeitraum() + " | " + e.getTeilnehmerAnzahl());
+						
+					}
+					
 				}
 	
 			}
@@ -193,6 +206,7 @@ public class ConsoleUI {
 		System.out.println("  2 | Meine Events anzeigen");
 		System.out.println("  3 | Mein Profil");
 		System.out.println("  4 | Feed anzeigen");
+		System.out.println("  5 | Alle Events anzeigen");
 		
 		System.out.println("========================");
 		
