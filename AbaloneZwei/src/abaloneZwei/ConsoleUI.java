@@ -167,7 +167,7 @@ public class ConsoleUI {
 		System.out.print("> ");
 		String titel = sc.nextLine();
 		
-		System.out.println("Kategorie");
+		System.out.println("Kategorie(Nummer wegen Enum)");
 		System.out.print("> ");
 		String kategorie = sc.nextLine();
 		
@@ -181,6 +181,7 @@ public class ConsoleUI {
 		int teilnehmerAnzahl = Integer.parseInt(teilnehmerAnzahlString);
 		
 		app.getAktivesProfil().eventAnlegen(titel, kategorie, zeitraum, teilnehmerAnzahl);
+		app.eventAnlegen(titel, Integer.parseInt(kategorie), zeitraum, teilnehmerAnzahl);
 		
 	}
 

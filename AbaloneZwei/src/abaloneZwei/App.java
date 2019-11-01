@@ -83,6 +83,12 @@ public class App {
 			throw new AppException("Anmeldefehler", getAktivesProfil() == null ? "" : getAktivesProfil().getNutzername());			
 	}
 	
+	public void eventAnlegen (String titel, int kategorie, String zeitraum, int teilnehmerAnzahl) {
+		
+		dbSchnittstelle.eventAnlegen(aktivesProfil.getNutzername(), titel, kategorie, zeitraum, teilnehmerAnzahl);
+		
+	}
+	
 	public void abmelden () {
 		
 		aktivesProfil = null;

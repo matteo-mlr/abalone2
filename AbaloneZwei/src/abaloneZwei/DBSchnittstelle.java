@@ -52,6 +52,13 @@ public class DBSchnittstelle {
 				"    PRIMARY KEY (id)\n" + 
 				");");
 		
+		stt.execute("CREATE TABLE IF NOT EXISTS eventVonProfil (\n" + 
+				"    profil_id BIGINT NOT NULL,\n" + 
+				"    aktion_id BIGINT NOT NULL,\n" + 
+				"    FOREIGN KEY (profil_id) REFERENCES profil(id),\n" + 
+				"    FOREIGN KEY (aktion_id) REFERENCES aktion(id)\n" + 
+				");");
+		
 //		stt.execute("CREATE TABLE IF NOT EXISTS kategorie (\n" + 
 //				"    id BIGINT AUTO_INCREMENT,\n" + 
 //				"    kategorie VARCHAR(20) NOT NULL,\n" + 
@@ -77,15 +84,34 @@ public class DBSchnittstelle {
 		
 	}
 	
-	public void eventAnlegen (String titel, int kategorie, String zeitraum, int teilnehmerAnz) {
+	public void eventAnlegen (String nutzername, String titel, int kategorie, String zeitraum, int teilnehmerAnz) {
 		
 		String eventAnlegen = "INSERT INTO aktion (titel, beschreibung, kategorie, zeitraum, teilnehmerAnz) VALUES ";
+		String eventProfilZuweisen = "INSERT INTO eventVonProfil (profil_id, aktion_id) VALUES ";
+		String getProfilID = "SELECT id FROM profil WHERE profil.nutzername = \"" + nutzername + "\"";
+		// Wie findet man die ID von dem Event heraus, welches gerade erstellt wurde?
+		// Vorerst mal über den Titel, der ist ja aber eigentlich kein Primärschlüssel
+		String getAktionID = "SELECT id FROM aktion WHERE titel = \"" + titel + "\"";	
 		
 		try {
 			
+			// Get Profil-ID von dem Profil, mit dem das Event erstellt wurde
+			
+			ResultSet rs = stt.executeQuery(getProfilID);
+			rs.next();
+			String profil_id = rs.getString("id");
+			
+			// Event anlegen
+			
 			stt.execute(eventAnlegen + "(\"" + titel + "\",\"" + "Test" + "\",\"" + 
 						kategorie + "\",\"" + zeitraum + "\",\"" + teilnehmerAnz + "\");");
-			System.out.println("Event in DB angelegt.");
+			
+			rs = stt.executeQuery(getAktionID); 
+			rs.next();
+			String aktion_id = rs.getString("id");
+			
+			stt.execute(eventProfilZuweisen + "(\"" + profil_id + "\",\"" + aktion_id + "\");");
+			System.out.println("Event in DB angelegt und Profil zugewiesen.");
 			
 		} catch (Exception e) {
 			
