@@ -16,6 +16,7 @@ public class Profil implements Serializable {
 	private int bewertung;
 	private Verlauf verlaufTeilgenommen;
 	private Verlauf verlaufVeranstaltet;
+	private ArrayList<Rezension> rezensionen;
 	private ArrayList<Event> meineEvents = new ArrayList<Event>();
 	private ArrayList<Event> feed = new ArrayList<Event>();
 	
@@ -29,6 +30,7 @@ public class Profil implements Serializable {
 		bewertung = 0;
 		verlaufTeilgenommen = new Verlauf();		
 		verlaufVeranstaltet = new Verlauf();
+		rezensionen = new ArrayList<>();
 		
 //		//test events
 //		eventAnlegen("Chili Sin Carne","Fleisch", "19:00 - 20:00",2);

@@ -11,13 +11,14 @@ public class DBSchnittstelle {
 	
 	private Connection con = null;
 	private Statement stt = null;
-	private String url = "jdbc:mysql://localhost:3306/abalone2";
+//	private String url = "jdbc:mysql://localhost:3306/abalone2";
+	private String url = "jdbc:mysql://matteomueller.net:3306/cu-muellermatteo01_abalone2";
 	
 	public DBSchnittstelle () {
 		
 		try {
 
-			con = DriverManager.getConnection(url, "root", "");
+			con = DriverManager.getConnection(url +"?user=cu-mu_nachthuhn" + "&password=nachthuhnauftoast!!11&serverTimezone=UTC");
 			
 			stt = con.createStatement();
 			
