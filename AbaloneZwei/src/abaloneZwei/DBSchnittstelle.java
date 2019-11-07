@@ -23,6 +23,8 @@ public class DBSchnittstelle {
 			stt = con.createStatement();
 			
 			initDB();
+
+			System.out.println("Verbindung hergestellt.");
 			
 		} catch (Exception e) {
 		
