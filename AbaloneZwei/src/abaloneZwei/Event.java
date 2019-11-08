@@ -15,8 +15,8 @@ public class Event {
 	//private bilder img[];
 	//private kategorieIcon img;
 	
-	public Event(Profil ersteller, String titel,String kategorie, String zeitraum,int teilnehmerAnzahl) {
-		
+	public Event(Profil ersteller, String titel, String kategorie, String zeitraum, int teilnehmerAnzahl) {
+
 		setErsteller(ersteller);
 		setTitel(titel);
 		setKategorie(kategorie);
@@ -120,6 +120,24 @@ public class Event {
 		return bewertung;
 		
 	}
+	
+	public void addTeilnehmer (Profil p) {
+		
+		if (getAktiveTeilnehmer() < getTeilnehmerAnzahl())
+			this.teilnehmer[getAktiveTeilnehmer()] = p;
+		
+	}
  	
+	public int getAktiveTeilnehmer () {
+		
+		int counter = 0;
+		
+		for (Profil p : this.teilnehmer)
+			if (p != null)
+				counter++;
+		
+		return counter;
+		
+	}
 
 }

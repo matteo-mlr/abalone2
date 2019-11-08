@@ -22,9 +22,7 @@ public class DBSchnittstelle {
 			
 			stt = con.createStatement();
 			
-			initDB();
-
-			System.out.println("Verbindung hergestellt.");
+//			initDB();
 			
 		} catch (Exception e) {
 		
@@ -34,42 +32,36 @@ public class DBSchnittstelle {
 		
 	}
 	
-	private void initDB () throws SQLException {
-		
-		stt.execute("CREATE TABLE IF NOT EXISTS profil (\n" + 
-				"    id BIGINT AUTO_INCREMENT,\n" + 
-				"    vorname VARCHAR(20) NOT NULL,\n" + 
-				"    nachname VARCHAR(20) NOT NULL,\n" + 
-				"    nutzername VARCHAR(30) NOT NULL,\n" + 
-				"    passwort VARCHAR(40) NOT NULL,\n" + 
-				"    email VARCHAR(25) NOT NULL,\n" + 
-				"    PRIMARY KEY (id)\n" + 
-				");");
-		
-		stt.execute("CREATE TABLE IF NOT EXISTS aktion (\n" + 
-				"    id BIGINT AUTO_INCREMENT,\n" + 
-				"    titel VARCHAR(20) NOT NULL,\n" + 
-				"    beschreibung VARCHAR(200) NOT NULL,\n" + 
-				"    kategorie BIGINT NOT NULL,\n" + 
-				"    zeitraum VARCHAR(20) NOT NULL,\n" + 
-				"    teilnehmerAnz INT NOT NULL,\n" + 
-				"    PRIMARY KEY (id)\n" + 
-				");");
-		
-		stt.execute("CREATE TABLE IF NOT EXISTS eventVonProfil (\n" + 
-				"    profil_id BIGINT NOT NULL,\n" + 
-				"    aktion_id BIGINT NOT NULL,\n" + 
-				"    FOREIGN KEY (profil_id) REFERENCES profil(id),\n" + 
-				"    FOREIGN KEY (aktion_id) REFERENCES aktion(id)\n" + 
-				");");
-		
-//		stt.execute("CREATE TABLE IF NOT EXISTS kategorie (\n" + 
+//	private void initDB () throws SQLException {
+//		
+//		stt.execute("CREATE TABLE IF NOT EXISTS profil (\n" + 
 //				"    id BIGINT AUTO_INCREMENT,\n" + 
-//				"    kategorie VARCHAR(20) NOT NULL,\n" + 
+//				"    vorname VARCHAR(20) NOT NULL,\n" + 
+//				"    nachname VARCHAR(20) NOT NULL,\n" + 
+//				"    nutzername VARCHAR(30) NOT NULL,\n" + 
+//				"    passwort VARCHAR(40) NOT NULL,\n" + 
+//				"    email VARCHAR(25) NOT NULL,\n" + 
 //				"    PRIMARY KEY (id)\n" + 
-//				");");		
-		
-	}
+//				");");
+//		
+//		stt.execute("CREATE TABLE IF NOT EXISTS aktion (\n" + 
+//				"    id BIGINT AUTO_INCREMENT,\n" + 
+//				"    titel VARCHAR(20) NOT NULL,\n" + 
+//				"    beschreibung VARCHAR(200) NOT NULL,\n" + 
+//				"    kategorie BIGINT NOT NULL,\n" + 
+//				"    zeitraum VARCHAR(20) NOT NULL,\n" + 
+//				"    teilnehmerAnz INT NOT NULL,\n" + 
+//				"    PRIMARY KEY (id)\n" + 
+//				");");
+//		
+//		stt.execute("CREATE TABLE IF NOT EXISTS eventVonProfil (\n" + 
+//				"    profil_id BIGINT NOT NULL,\n" + 
+//				"    aktion_id BIGINT NOT NULL,\n" + 
+//				"    FOREIGN KEY (profil_id) REFERENCES profil(id),\n" + 
+//				"    FOREIGN KEY (aktion_id) REFERENCES aktion(id)\n" + 
+//				");");
+//		
+//	}
 	
 	public void profilAnlegen (String vorname, String nachname, String nutzername, String passwort, String email) {
 		
@@ -78,7 +70,6 @@ public class DBSchnittstelle {
 		try {
 		
 			stt.execute(profilAnlegen + "(\"" + vorname + "\",\"" + nachname + "\",\"" + nutzername + "\",\"" + passwort + "\",\"" + email + "\");");
-			System.out.println("Profil in DB angelegt.");
 		
 		} catch (Exception e) {
 			
@@ -188,6 +179,58 @@ public class DBSchnittstelle {
 		}
 		
 		return alleEvents;
+		
+	}
+	
+	public void teilnehmen (String titel, String nutzername) {
+		
+		String aktuelleTeilnehmer = "SELECT COUNT(profil_id) FROM profilNimmtTeilAn WHERE aktion_id IN (SELECT id FROM aktion WHERE titel = \"" + titel + "\")";
+		String getEvent = "SELECT * FROM aktion WHERE titel = \"" + titel + "\"";
+		String getProfilID = "SELECT id FROM profil WHERE nutzername = \"" + nutzername + "\""; 
+		
+		try {
+			
+			ResultSet rs = stt.executeQuery(aktuelleTeilnehmer);
+			int aktuelleTeilnehmerAnzahl = 0;
+			int teilnehmerAnzahl = 0;
+			int eventID = 0;
+			int profilID = 0;
+			
+			while (rs.next()) {
+				
+				aktuelleTeilnehmerAnzahl = rs.getRow();
+				
+			}
+			
+			rs = stt.executeQuery(getEvent);
+			
+			while (rs.next()) {
+				
+				teilnehmerAnzahl = rs.getInt("teilnehmerAnz");
+				eventID = rs.getInt("id");
+				
+			}
+			
+			rs = stt.executeQuery(getProfilID);
+			
+			while (rs.next()) {
+				
+				profilID = rs.getInt("id");
+				
+			}
+			
+			if (aktuelleTeilnehmerAnzahl < teilnehmerAnzahl) {
+				
+				String updateTeilnehmerAnz = "INSERT INTO profilNimmtTeilAn (profil_id, aktion_id) VALUES (" + profilID + ", " + eventID + ");";
+				stt.execute(updateTeilnehmerAnz);
+			
+			}
+			
+		} catch (Exception e) {
+			
+			e.printStackTrace();
+			
+		}
 		
 	}
 

@@ -96,6 +96,24 @@ public class App {
 		
 	}
 	
+	public int getAnzahlEvents () {
+		
+		return dbSchnittstelle.getAlleEvents().size();
+		
+	}
+	
+	public Event getEvent (int number) {
+		
+		return getAlleEvents().get(number - 1);
+		
+	}
+	
+	public void anEventTeilnehmen (String titel) {
+		
+		dbSchnittstelle.teilnehmen(titel, aktivesProfil.getNutzername());
+		
+	}
+	
 	public void abmelden () {
 		
 		aktivesProfil = null;

@@ -15,6 +15,8 @@ public class ConsoleUI {
 	private static final String REGEX_MENU_ANMELDEN_REGISTRIEREN = "[1-2]";
 	private static final String REGEX_MENU_ANGEMELDET = "[1-5]";
 	private static final String REGEX_MENU_PROFIL = "[1-3]";
+	private static final String REGEX_MENU_EVENTS_ANGEZEIGT = "[1-2]";
+	private static final String REGEX_MENU_EVENT = "[1-2]";
 	
 	
 	
@@ -43,6 +45,7 @@ public class ConsoleUI {
 				anmelden();
 			}
 			
+			innerloop:
 			while(true) {
 	
 				printMenu();
@@ -135,10 +138,99 @@ public class ConsoleUI {
 				if(eingabe.equals("5")) {
 					
 					ArrayList<Event> alleEvents = app.getAlleEvents();
+					int counter = 1;		
 					
-					for (Event e : alleEvents) {
+					while (true) {
 						
-						System.out.println(e.getTitel() + " | " + e.getKategorie() + " | " + e.getZeitraum() + " | " + e.getTeilnehmerAnzahl());
+						for (Event e : alleEvents) {
+							
+							System.out.println(counter++ + " | " + e.getTitel() + " | " + e.getKategorie() + " | " + e.getZeitraum() + " | " + e.getTeilnehmerAnzahl());
+							
+						}	
+						
+						printEventsAngezeigtMenu();
+						
+						System.out.print(">");
+						eingabe = sc.nextLine();
+						
+						if (eingabe.matches(REGEX_MENU_EVENTS_ANGEZEIGT)) {
+							
+							if (eingabe.equals("1")) {
+								
+								System.out.println("Wählen Sie ein Gericht.");
+								int eventNumber = 0;
+								String regex = "[1-" + app.getAnzahlEvents() + "]";
+								
+								while (true) {
+									
+									System.out.print(">");
+									eingabe = sc.nextLine();
+									
+									if (eingabe.matches(regex)) {
+										
+										eventNumber = Integer.parseInt(eingabe);
+										break;
+										
+									}
+									
+								}
+						
+									
+								Event e = app.getEvent(Integer.parseInt(eingabe));
+								
+								System.out.println("========================");										
+								System.out.println(e.getTitel());										
+								System.out.println("========================");
+								System.out.println("Beschreibung:");
+								System.out.println(e.getBeschreibung());
+								System.out.println("Kategorie:");
+								System.out.println(e.getKategorie());
+								System.out.println("Zeitraum:");
+								System.out.println(e.getZeitraum());
+								System.out.println("========================");
+								System.out.println("Aktuelle Teilnehmer:");
+								System.out.println(e.getAktiveTeilnehmer() + "/" + e.getTeilnehmerAnzahl());
+								System.out.println("========================");			
+								
+								printEventMenu();
+								
+								while (true) {
+									
+									System.out.print(">");
+									eingabe = sc.nextLine();
+									
+									if (eingabe.matches(REGEX_MENU_EVENT)) {
+										
+										break;
+										
+									}
+									
+								}
+								
+
+								if (eingabe.equals("1")) {
+									
+									app.anEventTeilnehmen(alleEvents.get(eventNumber - 1).getTitel());
+									System.out.println("Sie nehmen nun teil!");
+									
+								}
+								
+
+								if (eingabe.equals("2")) {
+									
+									break;
+									
+								}
+								
+							}
+							
+							if (eingabe.equals("2")) {
+								
+								continue innerloop;
+								
+							}
+							
+						}
 						
 					}
 					
@@ -149,7 +241,6 @@ public class ConsoleUI {
 		}
 		
 	}
-		
 	
 	private static void eventsAnzeigen() {
 		
@@ -197,6 +288,28 @@ public class ConsoleUI {
 		app.eventAnlegen(titel, Integer.parseInt(kategorie), zeitraum, teilnehmerAnzahl);
 		
 	}
+	
+	private static void printEventMenu () {
+		
+		System.out.println("========================");
+		
+		System.out.println("  1 | Teilnehmen!");
+		System.out.println("  2 | Zurück");
+		
+		System.out.println("========================");
+		
+	}
+	
+	private static void printEventsAngezeigtMenu () {
+		
+		System.out.println("========================");
+		
+		System.out.println("  1 | Event wählen");
+		System.out.println("  2 | Zurück");
+		
+		System.out.println("========================");
+		
+	}	
 
 	private static void printMenu() {
 		
