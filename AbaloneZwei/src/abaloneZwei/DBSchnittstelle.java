@@ -7,6 +7,10 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import javax.management.RuntimeErrorException;
+
+import fehlermanagement.AppEventTeilnehmenException;
+
 public class DBSchnittstelle {
 	
 	private Connection con = null;
@@ -182,53 +186,65 @@ public class DBSchnittstelle {
 		
 	}
 	
-	public void teilnehmen (String titel, String nutzername) {
+	public void teilnehmen (String titel, String nutzername) throws AppEventTeilnehmenException {
 		
-		String aktuelleTeilnehmer = "SELECT COUNT(profil_id) FROM profilNimmtTeilAn WHERE aktion_id IN (SELECT id FROM aktion WHERE titel = \"" + titel + "\")";
+		String aktuelleTeilnehmer = "SELECT profil_id FROM profilNimmtTeilAn WHERE aktion_id IN (SELECT id FROM aktion WHERE titel = \"" + titel + "\");";
 		String getEvent = "SELECT * FROM aktion WHERE titel = \"" + titel + "\"";
 		String getProfilID = "SELECT id FROM profil WHERE nutzername = \"" + nutzername + "\""; 
 		
 		try {
-			
-			ResultSet rs = stt.executeQuery(aktuelleTeilnehmer);
-			int aktuelleTeilnehmerAnzahl = 0;
-			int teilnehmerAnzahl = 0;
-			int eventID = 0;
-			int profilID = 0;
-			
-			while (rs.next()) {
+		
+			try {
 				
-				aktuelleTeilnehmerAnzahl = rs.getRow();
+				ResultSet rs = stt.executeQuery(aktuelleTeilnehmer);
+				int aktuelleTeilnehmerAnzahl = 0;
+				int teilnehmerAnzahl = 0;
+				int eventID = 0;
+				int profilID = 0;
+				
+				while (rs.next()) {
+					
+					aktuelleTeilnehmerAnzahl++;
+					
+				}
+				
+				rs = stt.executeQuery(getEvent);
+				
+				while (rs.next()) {
+					
+					teilnehmerAnzahl = rs.getInt("teilnehmerAnz");
+					eventID = rs.getInt("id");
+					
+				}
+				
+				rs = stt.executeQuery(getProfilID);
+				
+				while (rs.next()) {
+					
+					profilID = rs.getInt("id");
+					
+				}
+				
+				if (aktuelleTeilnehmerAnzahl < teilnehmerAnzahl) {
+					
+					String updateTeilnehmerAnz = "INSERT INTO profilNimmtTeilAn (profil_id, aktion_id) VALUES (" + profilID + ", " + eventID + ");";
+					stt.execute(updateTeilnehmerAnz);
+				
+				} else {
+					
+					throw new AppEventTeilnehmenException("Event ist bereits voll.", nutzername);
+					
+				}
+				
+			} catch (Exception e) {
+				
+				e.printStackTrace();
 				
 			}
-			
-			rs = stt.executeQuery(getEvent);
-			
-			while (rs.next()) {
-				
-				teilnehmerAnzahl = rs.getInt("teilnehmerAnz");
-				eventID = rs.getInt("id");
-				
-			}
-			
-			rs = stt.executeQuery(getProfilID);
-			
-			while (rs.next()) {
-				
-				profilID = rs.getInt("id");
-				
-			}
-			
-			if (aktuelleTeilnehmerAnzahl < teilnehmerAnzahl) {
-				
-				String updateTeilnehmerAnz = "INSERT INTO profilNimmtTeilAn (profil_id, aktion_id) VALUES (" + profilID + ", " + eventID + ");";
-				stt.execute(updateTeilnehmerAnz);
-			
-			}
-			
+		
 		} catch (Exception e) {
 			
-			e.printStackTrace();
+			//
 			
 		}
 		

@@ -1,9 +1,9 @@
 package abaloneZwei;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.Scanner;
 
+import fehlermanagement.AppEventTeilnehmenException;
 import fehlermanagement.AppException;
 
 public class ConsoleUI {
@@ -138,10 +138,10 @@ public class ConsoleUI {
 				if(eingabe.equals("5")) {
 					
 					ArrayList<Event> alleEvents = app.getAlleEvents();
-					int counter = 1;		
 					
 					while (true) {
 						
+						int counter = 1;		
 						for (Event e : alleEvents) {
 							
 							System.out.println(counter++ + " | " + e.getTitel() + " | " + e.getKategorie() + " | " + e.getZeitraum() + " | " + e.getTeilnehmerAnzahl());
@@ -210,8 +210,15 @@ public class ConsoleUI {
 
 								if (eingabe.equals("1")) {
 									
-									app.anEventTeilnehmen(alleEvents.get(eventNumber - 1).getTitel());
-									System.out.println("Sie nehmen nun teil!");
+									try {
+									
+										app.anEventTeilnehmen(alleEvents.get(eventNumber - 1).getTitel());
+									
+									} catch (AppEventTeilnehmenException aete) {
+										
+										System.out.println("Event ist bereits voll.");
+										
+									}
 									
 								}
 								

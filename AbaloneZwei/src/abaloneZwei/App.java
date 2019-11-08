@@ -1,8 +1,8 @@
 package abaloneZwei;
 
-import java.sql.ResultSet;
 import java.util.ArrayList;
 
+import fehlermanagement.AppEventTeilnehmenException;
 import fehlermanagement.AppException;
 
 public class App {
@@ -108,7 +108,7 @@ public class App {
 		
 	}
 	
-	public void anEventTeilnehmen (String titel) {
+	public void anEventTeilnehmen (String titel) throws AppEventTeilnehmenException {
 		
 		dbSchnittstelle.teilnehmen(titel, aktivesProfil.getNutzername());
 		
