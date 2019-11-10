@@ -108,6 +108,12 @@ public class App {
 		
 	}
 	
+	public ArrayList<Event> eigeneEvents () {
+		
+		return dbSchnittstelle.getEventsVonProfil(aktivesProfil.getNutzername());
+		
+	}
+	
 	// An einem Event teilnehmen
 	public void anEventTeilnehmen (int eventID) throws AppEventTeilnehmenException {
 		

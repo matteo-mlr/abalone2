@@ -17,8 +17,7 @@ public class ConsoleUI {
 	private static final String REGEX_MENU_PROFIL = "[1-3]";
 	private static final String REGEX_MENU_EVENTS_ANGEZEIGT = "[1-2]";
 	private static final String REGEX_MENU_EVENT = "[1-2]";
-	
-	
+	private static final String REGEX_MENU_EIGENE_EVENTS_LISTE = "[1-2]";	
 	
 	public static void main(String[] args) {
 		
@@ -61,8 +60,68 @@ public class ConsoleUI {
 	
 				if(eingabe.equals("1"))
 					eventAnlegen();
-				if(eingabe.equals("2"))
-					eventsAnzeigen();
+				
+				if(eingabe.equals("2")) {
+					
+					ArrayList<Event> eigeneEvents = app.eigeneEvents();
+					int counter = 1;
+					
+					System.out.println();
+					for (Event e : eigeneEvents) {
+						
+						System.out.println(counter++ + " | " + e.getTitel() + " | " + e.getKategorie() + " | " + e.getZeitraum() + " | " + e.getTeilnehmerAnzahl());
+						
+					}
+					System.out.println();
+					
+					printEigeneEventsMenu();
+					
+					while (true) {
+						
+						System.out.print(">");
+						eingabe = sc.nextLine();
+						
+						if (eingabe.matches(REGEX_MENU_EIGENE_EVENTS_LISTE))							
+							break;		
+						
+					}
+					
+					if (eingabe.equals("1")) {
+						
+						System.out.println("Wählen Sie ein Event.");
+						int eventNumber = 0;
+						String regex = "[1-" + eigeneEvents.size() + "]";
+						
+						while (true) {
+							
+							System.out.print(">");
+							eingabe = sc.nextLine();
+							
+							if (eingabe.matches(regex))
+								break;
+							
+						}
+						
+						System.out.println("========================");										
+						System.out.println(eigeneEvents.get(Integer.parseInt(eingabe) - 1).getTitel());										
+						System.out.println("========================");
+						System.out.println("Beschreibung:");
+						System.out.println(eigeneEvents.get(Integer.parseInt(eingabe) - 1).getBeschreibung());
+						System.out.println("Kategorie:");
+						System.out.println(eigeneEvents.get(Integer.parseInt(eingabe) - 1).getKategorie());
+						System.out.println("Zeitraum:");
+						System.out.println(eigeneEvents.get(Integer.parseInt(eingabe) - 1).getZeitraum());
+						System.out.println("========================");
+						System.out.println("Aktuelle Teilnehmer:");
+						System.out.println(app.getEventTeilnehmer(eigeneEvents.get(Integer.parseInt(eingabe) - 1).getID()) + "/" + eigeneEvents.get(Integer.parseInt(eingabe) - 1).getTeilnehmerAnzahl());
+						System.out.println("========================");	
+						
+						printEigenesEventMenu();
+						
+					}
+					
+				}	
+				
 				if(eingabe.equals("3")) {
 					
 					profilMenu();
@@ -148,12 +207,14 @@ public class ConsoleUI {
 					
 					while (true) {
 						
-						int counter = 1;		
+						int counter = 1;
+						System.out.println();
 						for (Event e : alleEvents) {
 							
 							System.out.println(counter++ + " | " + e.getTitel() + " | " + e.getKategorie() + " | " + e.getZeitraum() + " | " + e.getTeilnehmerAnzahl());
 							
-						}	
+						}
+						System.out.println();
 						
 						printEventsAngezeigtMenu();
 						
@@ -165,7 +226,7 @@ public class ConsoleUI {
 							// Gericht aus der Liste auswählen
 							if (eingabe.equals("1")) {
 								
-								System.out.println("Wählen Sie ein Gericht.");
+								System.out.println("Wählen Sie ein Event.");
 								int eventNumber = 0;
 								String regex = "[1-" + app.getAnzahlEvents() + "]";
 								
@@ -258,22 +319,25 @@ public class ConsoleUI {
 		
 	}
 	
-	private static void eventsAnzeigen() {
+	private static void printEigenesEventMenu () {
 		
-		ArrayList<Event> events = app.getAktivesProfil().getMeineEvents();
+		System.out.println("========================");
 		
-		if (events.size() == 0) {
-			
-			System.out.println("Sie haben noch keine Events.");
-			return;
-			
-		}
+		System.out.println("  1 | Event bearbeiten");
+		System.out.println("  2 | Zurück");
 		
-		for (int i = 0; i < events.size(); i++) {
-			System.out.println((i+1) + ". " + events.get(i).getTitel());
-			
-		}
+		System.out.println("========================");
 		
+	}
+	
+	private static void printEigeneEventsMenu () {
+		
+		System.out.println("========================");
+		
+		System.out.println("  1 | Event wählen");
+		System.out.println("  2 | Zurück");
+		
+		System.out.println("========================");
 		
 	}
 	

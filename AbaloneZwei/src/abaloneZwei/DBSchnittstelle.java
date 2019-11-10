@@ -110,7 +110,6 @@ public class DBSchnittstelle {
 			String aktion_id = rs.getString("id");
 			
 			stt.execute(eventProfilZuweisen + "(\"" + profil_id + "\",\"" + aktion_id + "\");");
-			System.out.println("Event in DB angelegt und Profil zugewiesen.");
 			
 		} catch (Exception e) {
 			
@@ -277,6 +276,48 @@ public class DBSchnittstelle {
 			//
 			
 		}
+		
+	}
+	
+	public ArrayList<Event> getEventsVonProfil (String nutzername) {
+		
+		ResultSet rs; 
+		
+		ArrayList<Event> eventsVonProfil = new ArrayList<>();
+		String getProfilID = "SELECT id FROM profil WHERE nutzername = \"" + nutzername + "\";";
+		int profilID = 0;
+		
+		try {
+			
+			// profilID der Accounts mit dem entsprechenden Nutzernamen abfragen
+			rs = stt.executeQuery(getProfilID);
+			
+			rs.next();
+			profilID = rs.getInt("id");
+			
+			// Events von diesem Profil abfragen
+			String getEventsVonProfil = "SELECT * FROM aktion WHERE id IN (SELECT aktion_id FROM eventVonProfil WHERE profil_id = " + profilID + ")";
+			rs = stt.executeQuery(getEventsVonProfil);
+			
+			while (rs.next()) {
+				
+				int id = rs.getInt("id");
+				String titel = rs.getString("titel");
+				String kategorie = "" + rs.getInt("kategorie");
+				String zeitraum = rs.getString("zeitraum");
+				int teilnehmerAnz = rs.getInt("teilnehmerAnz");
+				
+				eventsVonProfil.add(new Event(id, null, titel, kategorie, zeitraum, teilnehmerAnz));
+				
+			}
+			
+		} catch (Exception e) {
+			
+			//
+			
+		}
+		
+		return eventsVonProfil;
 		
 	}
 
