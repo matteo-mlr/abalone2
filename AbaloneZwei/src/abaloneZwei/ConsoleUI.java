@@ -77,11 +77,13 @@ public class ConsoleUI {
 							if (eingabe.equals("1"))
 								System.out.println(app.getAktivesProfil().toString());
 							
+							// Passwort ändern
 							if (eingabe.equals("2")) {
 								
 								System.out.println("Altes Passwort: ");
 								String neuesPasswort = "";
 								
+								// Altes Passwort eingeben
 								while (true) {
 	
 									System.out.print(">");
@@ -94,6 +96,7 @@ public class ConsoleUI {
 								
 								}
 								
+								// Neues Passwort eingeben
 								while (true) {
 									
 									System.out.println("Neues Passwort: ");
@@ -111,11 +114,13 @@ public class ConsoleUI {
 									
 								}
 								
+								// Neues Passwort übernehmen
 								app.getAktivesProfil().passwortÄndern(neuesPasswort);
 								System.out.println("Ihr Passwort wurde erfolgreich geändert!");
 								
 							}
 							
+							// Abmelden
 							if (eingabe.equals("3")) {
 								
 								app.abmelden();
@@ -131,10 +136,12 @@ public class ConsoleUI {
 					
 				}
 				
+				// Feed anzeigen
 				if(eingabe.equals("4")) {
 					System.out.println(app.getAktivesProfil().getFeed());
 				}
 				
+				// Alle Events des Systems anzeigen
 				if(eingabe.equals("5")) {
 					
 					ArrayList<Event> alleEvents = app.getAlleEvents();
@@ -155,6 +162,7 @@ public class ConsoleUI {
 						
 						if (eingabe.matches(REGEX_MENU_EVENTS_ANGEZEIGT)) {
 							
+							// Gericht aus der Liste auswählen
 							if (eingabe.equals("1")) {
 								
 								System.out.println("Wählen Sie ein Gericht.");
@@ -211,7 +219,8 @@ public class ConsoleUI {
 								if (eingabe.equals("1")) {
 									
 									try {
-									
+										
+										// An ausgewähltem Event teilnehmen -> eventID wird zur Bestimmung des Events übergeben
 										app.anEventTeilnehmen(alleEvents.get(eventNumber - 1).getID());
 									
 									} catch (AppEventTeilnehmenException aete) {

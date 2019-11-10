@@ -194,8 +194,10 @@ public class DBSchnittstelle {
 		
 		try {
 			
+			// Alle profilIDs, die an dem Event teilnehmen
 			ResultSet rs = stt.executeQuery(aktuelleTeilnehmer);
 			
+			// Zählen, wie viele Profile an diesem Event teilnehmen
 			while (rs.next()) {
 				
 				aktuelleTeilnehmerAnzahl++;
@@ -227,6 +229,7 @@ public class DBSchnittstelle {
 				int teilnehmerAnzahl = 0;
 				int profilID = 0;
 				
+				// Teilnehmer eines Events zählen
 				while (rs.next()) {
 					
 					aktuelleTeilnehmerAnzahl++;
@@ -235,6 +238,7 @@ public class DBSchnittstelle {
 				
 				rs = stt.executeQuery(getEvent);
 				
+				// Maximale Teilnehmeranzahl eines Events abfragen
 				while (rs.next()) {
 					
 					teilnehmerAnzahl = rs.getInt("teilnehmerAnz");
@@ -243,12 +247,14 @@ public class DBSchnittstelle {
 				
 				rs = stt.executeQuery(getProfilID);
 				
+				// profilID des Profils mit dem übergebenen Nutzernamen abfragen
 				while (rs.next()) {
 					
 					profilID = rs.getInt("id");
 					
 				}
 				
+				// Wenn die maximale Teilnehmeranzahl noch nicht erreicht ist, Profil für die Teilnahme eintragen
 				if (aktuelleTeilnehmerAnzahl < teilnehmerAnzahl) {
 					
 					String updateTeilnehmerAnz = "INSERT INTO profilNimmtTeilAn (profil_id, aktion_id) VALUES (" + profilID + ", " + eventID + ");";

@@ -108,12 +108,14 @@ public class App {
 		
 	}
 	
+	// An einem Event teilnehmen
 	public void anEventTeilnehmen (int eventID) throws AppEventTeilnehmenException {
 		
 		dbSchnittstelle.teilnehmen(eventID, aktivesProfil.getNutzername());
 		
 	}
 	
+	// Gibt die aktuelle Teilnehmeranzahl eines Events zurück
 	public int getEventTeilnehmer (int eventID) {
 		
 		return dbSchnittstelle.getEventTeilnehmer(eventID);
