@@ -189,7 +189,7 @@ public class ConsoleUI {
 								System.out.println(e.getZeitraum());
 								System.out.println("========================");
 								System.out.println("Aktuelle Teilnehmer:");
-								System.out.println(e.getAktiveTeilnehmer() + "/" + e.getTeilnehmerAnzahl());
+								System.out.println(app.getEventTeilnehmer(alleEvents.get(eventNumber - 1).getID()) + "/" + e.getTeilnehmerAnzahl());
 								System.out.println("========================");			
 								
 								printEventMenu();
@@ -212,7 +212,7 @@ public class ConsoleUI {
 									
 									try {
 									
-										app.anEventTeilnehmen(alleEvents.get(eventNumber - 1).getTitel());
+										app.anEventTeilnehmen(alleEvents.get(eventNumber - 1).getID());
 									
 									} catch (AppEventTeilnehmenException aete) {
 										

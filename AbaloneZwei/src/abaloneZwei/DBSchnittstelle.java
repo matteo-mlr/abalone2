@@ -167,12 +167,13 @@ public class DBSchnittstelle {
 		
 		while (rs.next()) {
 			
+			int id = rs.getInt("id");
 			String titel = rs.getString("titel");
 			String kategorie = "" + rs.getInt("kategorie");
 			String zeitraum = rs.getString("zeitraum");
 			int teilnehmerAnz = rs.getInt("teilnehmerAnz");
 			
-			alleEvents.add(new Event(null, titel, kategorie, zeitraum, teilnehmerAnz));
+			alleEvents.add(new Event(id, null, titel, kategorie, zeitraum, teilnehmerAnz));
 			
 		}
 		
@@ -186,10 +187,35 @@ public class DBSchnittstelle {
 		
 	}
 	
-	public void teilnehmen (String titel, String nutzername) throws AppEventTeilnehmenException {
+	public int getEventTeilnehmer (int eventID) {
 		
-		String aktuelleTeilnehmer = "SELECT profil_id FROM profilNimmtTeilAn WHERE aktion_id IN (SELECT id FROM aktion WHERE titel = \"" + titel + "\");";
-		String getEvent = "SELECT * FROM aktion WHERE titel = \"" + titel + "\"";
+		String aktuelleTeilnehmer = "SELECT profil_id FROM profilNimmtTeilAn WHERE aktion_id = " + eventID + ";";
+		int aktuelleTeilnehmerAnzahl = 0;
+		
+		try {
+			
+			ResultSet rs = stt.executeQuery(aktuelleTeilnehmer);
+			
+			while (rs.next()) {
+				
+				aktuelleTeilnehmerAnzahl++;
+				
+			}
+			
+		} catch (Exception e) {
+			
+			//
+			
+		}
+		
+		return aktuelleTeilnehmerAnzahl;
+		
+	}
+	
+	public void teilnehmen (int eventID, String nutzername) throws AppEventTeilnehmenException {
+		
+		String aktuelleTeilnehmer = "SELECT profil_id FROM profilNimmtTeilAn WHERE aktion_id = " + eventID + ";";
+		String getEvent = "SELECT * FROM aktion WHERE id = " + eventID + ";";
 		String getProfilID = "SELECT id FROM profil WHERE nutzername = \"" + nutzername + "\""; 
 		
 		try {
@@ -199,7 +225,6 @@ public class DBSchnittstelle {
 				ResultSet rs = stt.executeQuery(aktuelleTeilnehmer);
 				int aktuelleTeilnehmerAnzahl = 0;
 				int teilnehmerAnzahl = 0;
-				int eventID = 0;
 				int profilID = 0;
 				
 				while (rs.next()) {
@@ -213,7 +238,6 @@ public class DBSchnittstelle {
 				while (rs.next()) {
 					
 					teilnehmerAnzahl = rs.getInt("teilnehmerAnz");
-					eventID = rs.getInt("id");
 					
 				}
 				

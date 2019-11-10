@@ -2,6 +2,7 @@ package abaloneZwei;
 
 public class Event {
 
+	private int id;
 	private Profil ersteller;
 	private String titel;
 	private String beschreibung;
@@ -25,6 +26,27 @@ public class Event {
 		
 		setTeilnehmer(new Profil[teilnehmerAnzahl]);
 		
+	}
+	
+	public Event(int id, Profil ersteller, String titel, String kategorie, String zeitraum, int teilnehmerAnzahl) {
+		
+		setID(id);
+		setErsteller(ersteller);
+		setTitel(titel);
+		setKategorie(kategorie);
+		setZeitraum(zeitraum);
+		setTeilnehmerAnzahl(teilnehmerAnzahl);
+		
+		setTeilnehmer(new Profil[teilnehmerAnzahl]);
+		
+	}
+	
+	public void setID (int id) {
+		this.id = id;
+	}
+	
+	public int getID () {
+		return id;
 	}
 
 	public Profil getErsteller() {

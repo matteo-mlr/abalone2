@@ -108,9 +108,15 @@ public class App {
 		
 	}
 	
-	public void anEventTeilnehmen (String titel) throws AppEventTeilnehmenException {
+	public void anEventTeilnehmen (int eventID) throws AppEventTeilnehmenException {
 		
-		dbSchnittstelle.teilnehmen(titel, aktivesProfil.getNutzername());
+		dbSchnittstelle.teilnehmen(eventID, aktivesProfil.getNutzername());
+		
+	}
+	
+	public int getEventTeilnehmer (int eventID) {
+		
+		return dbSchnittstelle.getEventTeilnehmer(eventID);
 		
 	}
 	
