@@ -320,5 +320,21 @@ public class DBSchnittstelle {
 		return eventsVonProfil;
 		
 	}
+	
+	public void eventAktualisieren (int id, String titel, int kategorie, String zeitraum, int teilnehmerAnzahl) {
+		
+		String updateEvent = "UPDATE aktion SET titel = \"" + titel + "\", beschreibung = \"Test\", kategorie = " + kategorie +", zeitraum = \"" + zeitraum + "\", teilnehmerAnz = " + teilnehmerAnzahl + " WHERE id = " + id + ";";
+		
+		try {
+		
+			stt.execute(updateEvent);
+		
+		} catch (Exception e) {
+			
+			//
+			
+		}
+		
+	}
 
 }

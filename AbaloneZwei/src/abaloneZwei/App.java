@@ -114,6 +114,12 @@ public class App {
 		
 	}
 	
+	public void eventAktualisieren (int id, String titel, int kategorie, String zeitraum, int teilnehmerAnzahl) {
+		
+		dbSchnittstelle.eventAktualisieren(id, titel, kategorie, zeitraum, teilnehmerAnzahl);
+		
+	}
+	
 	// An einem Event teilnehmen
 	public void anEventTeilnehmen (int eventID) throws AppEventTeilnehmenException {
 		

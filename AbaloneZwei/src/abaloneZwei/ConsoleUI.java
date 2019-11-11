@@ -102,6 +102,8 @@ public class ConsoleUI {
 							
 						}
 						
+						eventNumber = Integer.parseInt(eingabe);
+						
 						System.out.println("========================");										
 						System.out.println(eigeneEvents.get(Integer.parseInt(eingabe) - 1).getTitel());										
 						System.out.println("========================");
@@ -117,6 +119,23 @@ public class ConsoleUI {
 						System.out.println("========================");	
 						
 						printEigenesEventMenu();
+						
+						while (true) {
+							
+							System.out.print(">");
+							eingabe = sc.nextLine();
+							
+							if (eingabe.matches(REGEX_MENU_EVENT))
+								break;
+							
+						}
+						
+						if (eingabe.equals("1")) {
+							
+							eventBearbeiten(eigeneEvents.get(eventNumber - 1));
+							
+						} else {
+						}
 						
 					}
 					
@@ -338,6 +357,41 @@ public class ConsoleUI {
 		System.out.println("  2 | Zurück");
 		
 		System.out.println("========================");
+		
+	}
+	
+	private static void eventBearbeiten (Event e) {
+		
+		System.out.println("========================");
+		System.out.println("    Event bearbeiten    ");
+		System.out.println("========================");
+		System.out.println("Drücken Sie Enter um den");
+		System.out.println("  Wert nicht zu ändern. ");
+		System.out.println("========================");
+		
+		System.out.println("Titel");
+		System.out.print("> ");
+		String titel = sc.nextLine();
+		
+		System.out.println("Kategorie(Nummer wegen Enum)");
+		System.out.print("> ");
+		String kategorie = sc.nextLine();
+		
+		System.out.println("Zeitraum");
+		System.out.print("> ");
+		String zeitraum = sc.nextLine();
+		
+		System.out.println("Teilnehmer Anzahl");
+		System.out.print("> ");
+		String teilnehmerAnzahlString = sc.nextLine();
+		int teilnehmerAnzahl = teilnehmerAnzahlString.equals("") ? e.getTeilnehmerAnzahl() : Integer.parseInt(teilnehmerAnzahlString);
+		
+		String titelFinal = titel.equals("") || titel.equals(e.getTitel()) ? e.getTitel() : titel;
+		String kategorieFinal = kategorie.equals("") || kategorie.equals(e.getKategorie()) ? e.getKategorie() : kategorie;
+		String zeitraumFinal = zeitraum.equals("") || zeitraum.equals(e.getZeitraum()) ? e.getZeitraum() : zeitraum;
+		int teilnehmerAnzahlFinal = teilnehmerAnzahl;
+		
+		app.eventAktualisieren(e.getID(), titelFinal, Integer.parseInt(kategorieFinal), zeitraumFinal, teilnehmerAnzahlFinal);
 		
 	}
 	
